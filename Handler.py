@@ -1,24 +1,23 @@
 
 class Handler:
-    __approachPit = None
-    __digFromPile = None
-    __approachTurningPoint = None
-    __approachLoadReceiver = None
-    __dumpOnLoadReceiver = None
-    __approachTurningPoint = None
-    __done = None
-    __sap_a_1 = __cvs_1 = __ls_1 = __tvds_1 = __stp_a = None
 
     # it should take functions or objects as arguments
     def __init__(self, approachP, dig, approachT1, approachLR, dump, approachT2, done=None):
         print("#" * 20 + "\nINITIALIZING HANDLER\n" + "#" * 20)
+
+        if not (callable(approachP) and callable(dig) and callable(approachT1) and callable(approachLR) and
+                callable(dump) and callable(approachT2)):
+            raise TypeError
+        if done is not None and not callable(done):
+            raise TypeError
+
         self.__approachPit = approachP
         self.__digFromPile = dig
         self.__approachTurningPoint = approachT1
         self.__approachLoadReceiver = approachLR
         self.__dumpOnLoadReceiver = dump
-        self.__approachTurningPoint = approachT2
-        self.__done = done
+        self.__approachTurningPoint2 = approachT2
+        self.__done = done if done is not None else False
 
         # fix permissions later
         self.__sap_a_1 = open("SAP.A.1", "r")
@@ -34,7 +33,7 @@ class Handler:
             self.__approachTurningPoint(self.__cvs_1, self.__ls_1, self.__tvds_1)
             self.__approachLoadReceiver(self.__cvs_1, self.__ls_1, self.__tvds_1)
             self.__dumpOnLoadReceiver(self.__cvs_1, self.__ls_1, self.__tvds_1)
-            self.__approachTurningPoint(self.__cvs_1, self.__ls_1, self.__tvds_1)
+            self.__approachTurningPoint2(self.__cvs_1, self.__ls_1, self.__tvds_1)
             if self.__done():
                 break
         print("run() is exiting")
