@@ -1,9 +1,10 @@
 import Handler
 
 if __name__ == "__main__":
-    # run the program
+    # handler needs functions or objects as arguments
     handler = Handler.Handler()
-
+    handler.run()
+    del handler
 
 
 
