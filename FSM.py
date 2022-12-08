@@ -1,3 +1,4 @@
+import math
 
 class FSM:
     def __init__(self):
@@ -50,10 +51,17 @@ class State:
         try: 
             return self.__connections[condition]
         except KeyError:
-            for key, item in self.__connections:
-                # do something with logic
-                pass
-        raise Exception("Transition not found")
+            default_case = None
+            for key, item in self.__connections.items():
+                if isinstance(key, Logic):
+                    lower_bound, upper_bound = key.get_type()
+                    if lower_bound < condition < upper_bound: # Love u Python <3
+                        return item
+                    elif key.is_default():
+                        default_case = item
+            if default_case is not None:
+                return default_case
+        raise Exception("Transition not found") # maybe create a new Exception
 
     def run_function(self, inp=None):
         if inp is None:
@@ -67,26 +75,31 @@ class State:
 
 
 class Logic:
-    # solve the problem of default case from the State class
+    def __init__(self, gt=-math.inf, lt=math.inf, default=False):
+        self.__greater_than = gt if gt is not None else -math.inf
+        self.__less_than = lt if lt is not None else math.inf
+        self.__custom_logic = None # not sure what to do with this one
+        self.__default = default
 
-    # this is just a stub, nothing is decided yet
-    def less_than(self):
-        pass
+    def get_type(self):
+        return self.__greater_than, self.__less_than
 
-    def greater_than(self):
-        pass
+    def is_default(self):
+        return self.__default
 
-    def custom_logic(self):
-        pass
+    def set_gt(self, gt):
+        self.__greater_than = gt if gt is not None else -math.inf
 
+    def set_lt(self, lt):
+        self.__less_than = lt if lt is not None else math.inf
 
 def func1():
     print("This is number one")
-    return 2
+    return int(input("Nr: "))
 
 def func2():
     print("This is number two")
-    return 3
+    return int(input("Nr: "))
 
 def func3():
     print("This is the third and final one")
@@ -100,15 +113,18 @@ def unlocked():
     inp = input("It's unlocked")
     return inp
 
-if __name__ == "__main__":
-    fsm = FSM()
-    """state1 = State(func1)
+
+
+
+def basicTest(fsm):
+    state1 = State(func1)
     state2 = State(func2)
-    state3 = State(func3, ending = True)
+    state3 = State(func3, ending=True)
     fsm.add_states([state1, state2, state3])
     state1.add_transition(2, state2)
-    state2.add_transition(3, state3)"""
+    state2.add_transition(3, state3)
 
+def stringTest(fsm):
     lockedState = State(locked)
     unlockedState = State(unlocked)
     lockedState.add_transition("coin", unlockedState)
@@ -117,5 +133,20 @@ if __name__ == "__main__":
     unlockedState.add_transition("coin", unlockedState)
     fsm.add_states([lockedState, unlockedState])
     fsm.set_current_state(unlockedState)
+
+def logicTest(fsm):
+    state1 = State(func1)
+    state2 = State(func2)
+    state3 = State(func3, ending=True)
+    fsm.add_states([state1, state2, state3])
+    state1.add_transition(Logic(gt=1, lt=5), state2)
+    state1.add_transition(Logic(default=True), state3)
+    state2.add_transition(Logic(gt=3), state3)
+
+if __name__ == "__main__":
+    fsm = FSM()
+    # basicTest(fsm)
+    # stringTest(fsm)
+    logicTest(fsm)
 
     fsm.run()
