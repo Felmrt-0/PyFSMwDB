@@ -1,10 +1,12 @@
-import math
-
+import Database
+import State
+import Logic
 class FSM:
     def __init__(self):
         self.__states = []
         self.__currentState = None
         self.__done = False
+        self.database = None
 
     def run(self, inp=None):
         while not self.__done:
@@ -31,67 +33,13 @@ class FSM:
         self.__currentState = self.__currentState.get_transition(condition)
         if self.__currentState.is_ending():
             self.__done = True
+    def setDatabase(self, name, password,dbName):
+        self.database = Database.setDatabase(name, password, dbName)
 
 
-class State:
-    def __init__(self, function, name=None, ending=False):
-        self.__function = function
-        self.__name = name
-        self.__ending = ending
-        self.__connections = {}
-        #self.__logics = [greaterthan, 0] # fix this thing
-
-    def add_transition(self, condition, target):
-        self.__connections[condition] = target
-
-    def set_name(self, name):
-        self.__name = name
-
-    def get_transition(self, condition):
-        try: 
-            return self.__connections[condition]
-        except KeyError:
-            default_case = None
-            for key, item in self.__connections.items():
-                if isinstance(key, Logic):
-                    lower_bound, upper_bound = key.get_type()
-                    if lower_bound < condition < upper_bound: # Love u Python <3
-                        return item
-                    elif key.is_default():
-                        default_case = item
-            if default_case is not None:
-                return default_case
-        raise Exception("Transition not found") # maybe create a new Exception
-
-    def run_function(self, inp=None):
-        if inp is None:
-            res = self.__function()
-        else:
-            res = self.__function(inp)
-        return res
-
-    def is_ending(self):
-        return self.__ending
 
 
-class Logic:
-    def __init__(self, gt=-math.inf, lt=math.inf, default=False):
-        self.__greater_than = gt if gt is not None else -math.inf
-        self.__less_than = lt if lt is not None else math.inf
-        self.__custom_logic = None # not sure what to do with this one
-        self.__default = default
 
-    def get_type(self):
-        return self.__greater_than, self.__less_than
-
-    def is_default(self):
-        return self.__default
-
-    def set_gt(self, gt):
-        self.__greater_than = gt if gt is not None else -math.inf
-
-    def set_lt(self, lt):
-        self.__less_than = lt if lt is not None else math.inf
 
 def func1():
     print("This is number one")
@@ -145,8 +93,14 @@ def logicTest(fsm):
 
 if __name__ == "__main__":
     fsm = FSM()
-    # basicTest(fsm)
-    # stringTest(fsm)
-    logicTest(fsm)
+    def test(state):
+        state.cond = True
 
-    fsm.run()
+    state1 = State(test)
+    state2 = State(test)
+
+    state1.add_transition(True, state2)
+    state2.add_transition(True, state1)
+
+
+
