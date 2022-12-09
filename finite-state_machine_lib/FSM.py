@@ -1,6 +1,6 @@
-import Database
-import State
-import Logic
+from Database import *
+from State import *
+from Logic import *
 class FSM:
     def __init__(self):
         self.__states = []
@@ -73,8 +73,8 @@ def basicTest(fsm):
     state2.add_transition(3, state3)
 
 def stringTest(fsm):
-    lockedState = State(locked)
-    unlockedState = State(unlocked)
+    lockedState = State.State(locked)
+    unlockedState = State.State(unlocked)
     lockedState.add_transition("coin", unlockedState)
     lockedState.add_transition("push", lockedState)
     unlockedState.add_transition("push", lockedState)

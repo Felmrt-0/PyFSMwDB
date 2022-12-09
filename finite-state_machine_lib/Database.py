@@ -21,3 +21,4 @@ class Database:
         assert isinstance(data, dict), "invalid data"
 
         return True
+
