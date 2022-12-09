@@ -1,4 +1,5 @@
 import math
+
 class Logic:
     def __init__(self, gt=-math.inf, lt=math.inf, default=False):
         self.__greater_than = gt if gt is not None else -math.inf

@@ -1,20 +1,21 @@
 from Database import *
 from State import *
 from Logic import *
+
 class FSM:
     def __init__(self):
         self.__states = []
         self.__currentState = None
         self.__done = False
-        self.database = None
+        self.__database = None
 
     def run(self, inp=None):
-        while not self.__done:
+        while not self.__currentState.is_ending():
             res = self.__currentState.run_function(inp)
             self.__switch_state(res)
-        self.__currentState.run_function(inp)
+        self.__currentState.run_function(inp) # this is for running the ending module as well
 
-    def add_state(self, state):
+    def __add_state(self, state):
         assert not isinstance(state, list), "The module should not be a list"
         self.__states.append(state)
         if self.__currentState is None:
@@ -23,7 +24,7 @@ class FSM:
     def add_states(self, state):
         assert isinstance(state, list), "The input should be a list"
         for s in state:
-            self.add_state(s)
+            self.__add_state(s)
 
     def set_current_state(self, state):
         assert not isinstance(state, list), "The module should not be a list"
@@ -31,14 +32,9 @@ class FSM:
 
     def __switch_state(self, condition):
         self.__currentState = self.__currentState.get_transition(condition)
-        if self.__currentState.is_ending():
-            self.__done = True
+
     def setDatabase(self, name, password,dbName):
-        self.database = Database.setDatabase(name, password, dbName)
-
-
-
-
+        self.__database = Database.setDatabase(name, password, dbName)
 
 
 def func1():

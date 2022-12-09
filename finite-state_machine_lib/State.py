@@ -1,3 +1,4 @@
+from Logic import *
 
 class State:
     def __init__(self, function, name=None, ending=False):
@@ -5,7 +6,6 @@ class State:
         self.__name = name
         self.__ending = ending
         self.__connections = {}
-        #self.__logics = [greaterthan, 0] # fix this thing
 
     def add_transition(self, condition, target):
         self.__connections[condition] = target
