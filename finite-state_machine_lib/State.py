@@ -13,6 +13,9 @@ class State:
     def set_name(self, name):
         self.__name = name
 
+    def get_name(self):
+        return self.__name
+
     def get_transition(self, condition):
         try:
             return self.__connections[condition]

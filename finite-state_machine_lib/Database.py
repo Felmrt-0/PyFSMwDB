@@ -1,4 +1,5 @@
 from influxdb import InfluxDBClient
+from columnar import columnar
 
 class Database:
     def __init__(self):
@@ -30,16 +31,63 @@ class Database:
             return False
         return True
 
-    # doesn't really work yet
-    def get_everything(self, table):
+    def delete(self, table, col, value):
+        self.__client.query("DELETE FROM "+ str(table) + " WHERE " + str(col) + " = " + str(value))
+
+    def get_latest_rows(self, table : str, number_of_rows=1):
+        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = res.raw["series"][0]
+        data = res["values"][::-1]
+        headers = res["columns"]
+        return headers, data
+
+    def get_first_rows(self, table : str, number_of_rows=1):
+        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = res.raw["series"][0]
+        data = res["values"][::-1]
+        headers = res["columns"]
+        return headers, data
+
+    def get_everything(self, table : str):
         res = self.__client.query("SELECT * FROM " + table + ";")
-        print(res.raw)
-        res = res.raw['series']
-        for i in res:
-            for j in i.items():
-                if isinstance(j[1], list):
-                    for k in j[1]:
-                        print(k)
+        res = res.raw['series'][0]
+        headers = res["columns"]
+        data = res["values"]
+        return headers, data
+
+    def print_formatter(self, headers, data):
+        return columnar(data=data, headers=headers, justify="c", min_column_width=10)
+
+    def print_latest_rows(self, table : str, number_of_rows=3):
+        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = res.raw["series"][0]
+        data = res["values"][::-1]
+        headers = res["columns"]
+        return self.print_formatter(headers, data)
+
+    def print_first_rows(self, table : str, number_of_rows=1):
+        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = res.raw["series"][0]
+        data = res["values"][::-1]
+        headers = res["columns"]
+        return self.print_formatter(headers, data)
+
+    def print_everything(self, table : str):
+        res = self.__client.query("SELECT * FROM " + table + ";")
+        res = res.raw['series'][0]
+        headers = res["columns"]
+        data = res["values"]
+        return self.print_formatter(headers, data)
+
+    def custom_query(self, query : str):
+        if not isinstance(query, str):
+            query = str(query)
+        res = self.__client.query(query);
+        res = res.raw['series'][0]
+        return res["columns"], res["values"]
+
+
+
 
 # for testing:
 if __name__ == "__main__":
@@ -62,9 +110,11 @@ if __name__ == "__main__":
     data = [data]
 
     db = Database()
-    db.createDatabase()
+    db.setDatabase("root", "root", "DefaultDatabase")
+    #db.createDatabase()
     #db.update(data)
-    db.get_everything("TestTable")
+    #print(db.print_everything("TestTable"))
+    #print(db.get_latest_rows("TestTable"))
 
 
 

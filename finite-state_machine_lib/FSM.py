@@ -6,7 +6,6 @@ class FSM:
     def __init__(self):
         self.__states = []
         self.__currentState = None
-        self.__done = False
         self.__database = None
 
     def run(self, inp=None):
@@ -35,6 +34,9 @@ class FSM:
 
     def setDatabase(self, name, password,dbName):
         self.__database = Database.setDatabase(name, password, dbName)
+
+    def currentPos(self):
+        return "The FSM is currently in module " + self.__currentState.get_name()
 
 
 def func1():
