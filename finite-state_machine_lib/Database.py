@@ -8,7 +8,7 @@ class Database:
 
     # Sets the FSM database
     def setDatabase(self, name, password, dbName):
-        assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName,str), "Input is not a String"
+        assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
         self.__client = InfluxDBClient('localhost', 8086, name, password, dbName)
         self.__client.get_list_database()
         self.__client.switch_database(dbName)
@@ -22,13 +22,14 @@ class Database:
         self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
+# Uppdaterar databasen med en ny rad
     def update(self, data):
         if isinstance(data, list):
             self.__client.write_points(data)
         elif isinstance(data, dict):
             self.__client.write_points([data])
         else:
-            return False
+            return False    #borde kanse vara en exception
         return True
 
     def delete(self, table, col, value):
@@ -108,13 +109,10 @@ if __name__ == "__main__":
         }
     }
     data = [data]
-
     db = Database()
-    db.setDatabase("root", "root", "DefaultDatabase")
-    #db.createDatabase()
-    #db.update(data)
-    #print(db.print_everything("TestTable"))
-    #print(db.get_latest_rows("TestTable"))
+    db.createDatabase()
+    db.update(data)
+
 
 
 

@@ -1,8 +1,9 @@
 from Logic import *
 
 class State:
-    def __init__(self, function, name=None, ending=False):
+    def __init__(self, function, paramenter=None,name=None, ending=False):
         self.__function = function
+        self.parameter = paramenter
         self.__name = name
         self.__ending = ending
         self.__connections = {}
