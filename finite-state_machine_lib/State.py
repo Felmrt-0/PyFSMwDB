@@ -3,7 +3,7 @@ from Logic import *
 class State:
     def __init__(self, function, paramenter=None,name=None, ending=False):
         self.__function = function
-        self.parameter = paramenter
+        self.__parameter = paramenter
         self.__name = name
         self.__ending = ending
         self.__connections = {}
@@ -25,10 +25,10 @@ class State:
             for key, item in self.__connections.items():
                 if isinstance(key, Logic):
                     lower_bound, upper_bound = key.get_type()
-                    if lower_bound < condition < upper_bound: # Love u Python <3
-                        return item
-                    elif key.is_default():
+                    if key.is_default():
                         default_case = item
+                    elif lower_bound < float(condition) < upper_bound: # Love u Python <3
+                        return item
             if default_case is not None:
                 return default_case
         raise Exception("Transition not found") # maybe create a new Exception

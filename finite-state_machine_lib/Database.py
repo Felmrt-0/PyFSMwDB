@@ -56,10 +56,11 @@ class Database:
         data = res["values"]
         return headers, data
 
-    def print_formatter(self, headers, data):
+    @staticmethod
+    def print_formatter(headers, data):
         return columnar(data=data, headers=headers, justify="c", min_column_width=10)
 
-    def print_latest_rows(self, table : str, number_of_rows=3):
+    def print_latest_rows(self, table : str, number_of_rows=1):
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
         res = res.raw["series"][0]
         data = res["values"][::-1]
@@ -88,8 +89,6 @@ class Database:
         return res["columns"], res["values"]
 
 
-
-
 # for testing:
 if __name__ == "__main__":
     import datetime
@@ -110,8 +109,10 @@ if __name__ == "__main__":
     }
     data = [data]
     db = Database()
-    db.createDatabase()
-    db.update(data)
+    db.setDatabase("root", "root", "DefaultDatabase")
+    #db.createDatabase()
+    #db.update(data)
+    print(db.print_latest_rows("TestTable", 4))
 
 
 

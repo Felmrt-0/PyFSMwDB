@@ -1,19 +1,36 @@
 from Database import *
 from State import *
 from Logic import *
-from datetime import *
+
 class FSM:
     def __init__(self):
         self.__states = []
         self.__currentState = None
         self.__done = False
-        self.database = None
+        self.__database = None
 
     def run(self, inp=None):
+        argument = inp
+
         while not self.__done:
-            res = self.__currentState.run_function(inp)
-            self.__switch_state(res)
-        self.__currentState.run_function(inp)
+            if argument is not None:
+                res = self.__currentState.run_function(argument)
+            else:
+                res = self.__currentState.run_function()
+            if isinstance(res, list) or isinstance(res, tuple):
+                if len(res) == 2:
+                    cond, argument = res
+                else:
+                    cond, *argument = res
+            else:
+                cond = res
+                argument = None
+            self.__switch_state(cond)
+
+        if argument is not None:
+            return self.__currentState.run_function(argument)
+        else:
+            return self.__currentState.run_function()
 
     def add_state(self, state):
         assert not isinstance(state, list), "The module should not be a list"
@@ -34,15 +51,16 @@ class FSM:
         self.__currentState = self.__currentState.get_transition(condition)
         if self.__currentState.is_ending():
             self.__done = True
+
     def setDatabase(self, name, password,dbName):
-       self.database = Database.setDatabase(name, password, dbName)
+       self.__database = Database.setDatabase(name, password, dbName)
+
     def createDatabase(self):
-        self.database = Database()
-        self.database.createDatabase()
+        self.__database = Database()
+        self.__database.createDatabase()
 
-
-
-
+    def get_database(self):
+        return self.__database
 
 
 def func1():
@@ -61,35 +79,40 @@ def locked(database):
     assert isinstance(database, Database)
     inp = input("It's locked")
     data = {
-        "measurement": "StringTest",
+        "measurement": "TestTable",
         "tags": {
             "Info": "Test"
         },
-        "time": datetime.now(),
+        "time": datetime.datetime.now(),
         "fields": {
-            "locked": inp
-
+            "locked" : inp
         }
     }
-    database.update(data)
-    return inp
+    database.update([data])
+    if inp != "push" and inp != "coin":
+        return
+    return inp, database
 
 def unlocked(database):
     assert isinstance(database, Database)
     inp = input("It's unlocked")
     data = {
-        "measurement": "StringTest",
+        "measurement": "TestTable",
         "tags": {
             "Info": "Test"
         },
-        "time": datetime.now(),
+        "time": datetime.datetime.now(),
         "fields": {
-            "Unlocked": inp
-
+            "unlocked": inp
         }
     }
     database.update([data])
-    return inp
+    if inp != "push" and inp != "coin":
+        return
+    return inp, database
+
+def endNode():
+    print("Finished")
 
 def basicTest(fsm):
     state1 = State(func1)
@@ -100,14 +123,17 @@ def basicTest(fsm):
     state2.add_transition(3, state3)
 
 def stringTest(fsm):
-    lockedState = State(locked, fsm.database)
-    unlockedState = State(unlocked, fsm.database)
+    lockedState = State(locked)
+    unlockedState = State(unlocked)
+    endState = State(endNode, ending=True)
     lockedState.add_transition("coin", unlockedState)
     lockedState.add_transition("push", lockedState)
     unlockedState.add_transition("push", lockedState)
     unlockedState.add_transition("coin", unlockedState)
+    lockedState.add_transition(Logic(default=True), endState)
+    unlockedState.add_transition(Logic(default=True), endState)
     fsm.add_states([lockedState, unlockedState])
-    fsm.set_current_state(unlockedState)
+    fsm.set_current_state(lockedState)
 
 def logicTest(fsm):
     state1 = State(func1)
@@ -119,9 +145,9 @@ def logicTest(fsm):
     state2.add_transition(Logic(gt=3), state3)
 
 if __name__ == "__main__":
+    import datetime
     fsm = FSM()
     fsm.createDatabase()
     stringTest(fsm)
-    fsm.run()
-
+    fsm.run(fsm.get_database())
 
