@@ -1,9 +1,7 @@
 # D0020E-Projekt
-Projekt till kursen D0020E på Luleås Univeritet.
+This is a project for the course Project in Computer Science and 
+Engineering at Luleå Univerity (Course code: D0020E)
 
-Projektet går ut på att skapa en framework för Finite-state machines(FSM) 
-och sedan implementera det i ett exempel där man skopar en hög och lastar det.
-
-Detta är min testning
-
-Author test2
+The Project is to create a framework for a nessled Finite-state 
+machines(FSM) that will be used for another project to automize 
+a wheelloader. 
