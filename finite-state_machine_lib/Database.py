@@ -22,7 +22,6 @@ class Database:
         self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
-# Uppdaterar databasen med en ny rad
     def update(self, data):
         if isinstance(data, list):
             self.__client.write_points(data)
