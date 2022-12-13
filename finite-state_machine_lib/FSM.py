@@ -52,10 +52,10 @@ class FSM:
         if self.__currentState.is_ending():
             self.__done = True
 
-    def setDatabase(self, name, password,dbName):
+    def set_database(self, name, password, dbName):
        self.__database = Database.setDatabase(name, password, dbName)
 
-    def createDatabase(self):
+    def create_database(self):
         self.__database = Database()
         self.__database.createDatabase()
 
@@ -147,7 +147,7 @@ def logicTest(fsm):
 if __name__ == "__main__":
     import datetime
     fsm = FSM()
-    fsm.createDatabase()
+    fsm.create_database()
     stringTest(fsm)
     fsm.run(fsm.get_database())
 
