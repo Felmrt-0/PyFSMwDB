@@ -4,13 +4,13 @@ from columnar import columnar
 class Database:
     def __init__(self):
         self.__client = None
-        self.__payload = []
+        self.__payload = [] #
 
     # Sets the FSM database
     def setDatabase(self, name, password, dbName):
         assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
         self.__client = InfluxDBClient('localhost', 8086, name, password, dbName)
-        self.__client.get_list_database()
+        #self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
     def createDatabase(self, host='localhost', port=8086, username='root', password='root', dbName="DefaultDatabase"):
@@ -19,7 +19,7 @@ class Database:
         assert isinstance(username, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
         self.__client = InfluxDBClient(host, port, username, password, dbName)
         self.__client.create_database(dbName)
-        self.__client.get_list_database()
+        #self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
     def update(self, data):
@@ -32,7 +32,14 @@ class Database:
         return True
 
     def delete(self, table, col, value):
-        self.__client.query("DELETE FROM "+ str(table) + " WHERE " + str(col) + " = " + str(value))
+        res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
+        columns = res.raw["series"][0]["columns"]
+        for i, t in enumerate(columns):
+            if t == "time":
+                time_pos=i
+                break
+        time = res.raw["series"][0]["values"][0][time_pos]
+        self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + time + "';")
 
     def get_latest_rows(self, table : str, number_of_rows=1):
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
@@ -60,24 +67,15 @@ class Database:
         return columnar(data=data, headers=headers, justify="c", min_column_width=10)
 
     def print_latest_rows(self, table : str, number_of_rows=1):
-        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
-        res = res.raw["series"][0]
-        data = res["values"][::-1]
-        headers = res["columns"]
+        headers, data = self.get_latest_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
 
     def print_first_rows(self, table : str, number_of_rows=1):
-        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
-        res = res.raw["series"][0]
-        data = res["values"][::-1]
-        headers = res["columns"]
+        headers, data = self.get_first_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
 
     def print_everything(self, table : str):
-        res = self.__client.query("SELECT * FROM " + table + ";")
-        res = res.raw['series'][0]
-        headers = res["columns"]
-        data = res["values"]
+        headers, data = self.get_everything(table)
         return self.print_formatter(headers, data)
 
     def custom_query(self, query : str):
@@ -111,8 +109,9 @@ if __name__ == "__main__":
     db.setDatabase("root", "root", "DefaultDatabase")
     #db.createDatabase()
     #db.update(data)
-    print(db.print_latest_rows("TestTable", 4))
-
+    #db.delete("TestTable", "locked", "blabla")
+    print(db.print_latest_rows("TestTable", 5))
+    #print(db.print_everything("TestTable"))
 
 
 
