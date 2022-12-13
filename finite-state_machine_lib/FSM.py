@@ -1,6 +1,7 @@
 from Database import *
 from State import *
 from Logic import *
+from datetime import *
 class FSM:
     def __init__(self):
         self.__states = []
@@ -58,19 +59,37 @@ def func3():
 
 def locked(database):
     assert isinstance(database, Database)
-
     inp = input("It's locked")
-    database.update([inp])
+    data = {
+        "measurement": "StringTest",
+        "tags": {
+            "Info": "Test"
+        },
+        "time": datetime.now(),
+        "fields": {
+            "locked": inp
+
+        }
+    }
+    database.update(data)
     return inp
 
 def unlocked(database):
     assert isinstance(database, Database)
     inp = input("It's unlocked")
-    database.update([inp])
+    data = {
+        "measurement": "StringTest",
+        "tags": {
+            "Info": "Test"
+        },
+        "time": datetime.now(),
+        "fields": {
+            "Unlocked": inp
+
+        }
+    }
+    database.update([data])
     return inp
-
-
-
 
 def basicTest(fsm):
     state1 = State(func1)
@@ -81,8 +100,8 @@ def basicTest(fsm):
     state2.add_transition(3, state3)
 
 def stringTest(fsm):
-    lockedState = State(locked)
-    unlockedState = State(unlocked)
+    lockedState = State(locked, fsm.database)
+    unlockedState = State(unlocked, fsm.database)
     lockedState.add_transition("coin", unlockedState)
     lockedState.add_transition("push", lockedState)
     unlockedState.add_transition("push", lockedState)
@@ -103,5 +122,6 @@ if __name__ == "__main__":
     fsm = FSM()
     fsm.createDatabase()
     stringTest(fsm)
+    fsm.run()
 
 

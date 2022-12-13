@@ -35,7 +35,7 @@ class State:
 
     def run_function(self, inp=None):
         if inp is None:
-            res = self.__function()
+            res = self.__function(self.parameter)
         else:
             res = self.__function(inp)
         return res
