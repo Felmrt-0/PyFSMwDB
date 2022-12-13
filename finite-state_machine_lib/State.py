@@ -1,15 +1,21 @@
 from Logic import *
 
 class State:
-    def __init__(self, function, paramenter=None,name=None, ending=False):
+    def __init__(self, function, parameter=None, name=None, ending=False):
         self.__function = function
-        self.__parameter = paramenter
+        self.__parameter = parameter
         self.__name = name
         self.__ending = ending
         self.__connections = {}
 
     def add_transition(self, condition, target):
         self.__connections[condition] = target
+
+    def set_parameter(self, parameter):
+        self.__parameter = parameter
+
+    def get_parameter(self):
+        return self.__parameter
 
     def set_name(self, name):
         self.__name = name
@@ -34,10 +40,16 @@ class State:
         raise Exception("Transition not found") # maybe create a new Exception
 
     def run_function(self, inp=None):
-        if inp is None:
-            res = self.__function(self.parameter)
+        if self.__parameter is None:
+            if inp is None:
+                res = self.__function()
+            else:
+                res = self.__function(inp)
         else:
-            res = self.__function(inp)
+            if inp is None:
+                res = self.__function(self.__parameter)
+            else:
+                res = self.__function(self.__parameter, inp)
         return res
 
     def is_ending(self):
