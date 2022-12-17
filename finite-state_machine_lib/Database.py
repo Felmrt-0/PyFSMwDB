@@ -33,13 +33,22 @@ class Database:
 
     def delete(self, table, col, value):
         res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
+        if len(res.raw["series"]) == 0:
+            return
         columns = res.raw["series"][0]["columns"]
         for i, t in enumerate(columns):
             if t == "time":
                 time_pos=i
                 break
-        time = res.raw["series"][0]["values"][0][time_pos]
-        self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + time + "';")
+        print(res.raw["series"][0]["values"])
+        time = []
+        for i in res.raw["series"][0]["values"]:
+            time.append(i[time_pos])
+        #time = res.raw["series"][0]["values"][0][time_pos]
+        print("time", time)
+        #self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + time + "';")
+        for t in time:
+            self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + t + "';")
 
     def get_latest_rows(self, table : str, number_of_rows=1):
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
@@ -64,7 +73,16 @@ class Database:
 
     @staticmethod
     def print_formatter(headers, data):
-        return columnar(data=data, headers=headers, justify="c", min_column_width=10)
+        list_of_rows = []
+        for d in data:
+            list_of_elements=[]
+            for d2 in d:
+                if d2 is not None:
+                    list_of_elements.append(d2)
+                else:
+                    list_of_elements.append("")
+            list_of_rows.append(list_of_elements)
+        return columnar(data=list_of_rows, headers=headers, justify="c", min_column_width=10)
 
     def print_latest_rows(self, table : str, number_of_rows=1):
         headers, data = self.get_latest_rows(table=table, number_of_rows=number_of_rows)
@@ -109,9 +127,9 @@ if __name__ == "__main__":
     db.setDatabase("root", "root", "DefaultDatabase")
     #db.createDatabase()
     #db.update(data)
-    #db.delete("TestTable", "locked", "blabla")
-    print(db.print_latest_rows("TestTable", 5))
-    #print(db.print_everything("TestTable"))
+    db.delete("TestTable", "locked", "bla")
+    #print(db.print_latest_rows("TestTable", 5))
+    print(db.print_everything("TestTable"))
 
 
 
