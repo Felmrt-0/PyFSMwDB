@@ -97,11 +97,12 @@ class Database:
         return self.print_formatter(headers, data)
 
     def custom_query(self, query : str):
-        if not isinstance(query, str):
-            query = str(query)
-        res = self.__client.query(query);
-        res = res.raw['series'][0]
-        return res["columns"], res["values"]
+        res = self.__client.query(query)
+        try:
+            res = res.raw['series'][0]
+            return res["columns"], res["values"]  # (headers, data)
+        except (KeyError, IndexError):
+            return
 
 
 # for testing:
@@ -127,9 +128,11 @@ if __name__ == "__main__":
     db.setDatabase("root", "root", "DefaultDatabase")
     #db.createDatabase()
     #db.update(data)
-    db.delete("TestTable", "locked", "bla")
+    #db.delete("TestTable", "locked", "bla")
     #print(db.print_latest_rows("TestTable", 5))
-    print(db.print_everything("TestTable"))
+    #print(db.print_everything("TestTable"))
+    #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
+    print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
 
 
 
