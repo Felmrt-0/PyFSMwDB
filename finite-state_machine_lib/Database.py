@@ -4,7 +4,8 @@ from columnar import columnar
 class Database:
     def __init__(self):
         self.__client = None
-        self.__payload = [] #
+        self.__payload = []
+        self.__columns = None
 
     # Sets the FSM database
     def setDatabase(self, name, password, dbName):
@@ -22,14 +23,22 @@ class Database:
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
-    def update(self, data):
+    def insert(self, data):
         if isinstance(data, list):
             self.__client.write_points(data)
         elif isinstance(data, dict):
             self.__client.write_points([data])
         else:
-            return False    #borde kanse vara en exception
+            return False    #borde kanske vara en exception
         return True
+
+    def update(self, values):
+        assert len(values) == len(self.__columns), "Size of values do not match size of stored columns"
+        data = self.__payload
+        data["time"] = datetime.datetime.now()
+        for i, c in self.__columns:
+            data["fields"][c] = values[i]
+        self.__client.write_points([data])
 
     def delete(self, table, col, value):
         res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
@@ -104,6 +113,30 @@ class Database:
         except (KeyError, IndexError):
             return
 
+    def set_payload(self, table, columns, tags:dict=None):
+        self.__columns = columns
+
+        if tags is not None:
+            self.__payload = {
+                "measurement" : table,
+                "time" : datetime.datetime.now(),
+                "tags" : tags
+            }
+        else:
+            self.__payload = {
+                "measurement": table,
+                "time": datetime.datetime.now()
+            }
+
+    def payload_set_tags(self, tags: dict):
+        self.__payload["tags"] = tags
+
+    def payload_add_tags(self, tags: dict):
+        if "tags" in self.__playload:
+            self.__payload["tags"].update(tags)
+        else:
+            self.__payload["tags"] = tags
+
 
 # for testing:
 if __name__ == "__main__":
@@ -114,8 +147,8 @@ if __name__ == "__main__":
 
     data = {
         "measurement" : "TestTable",
-        "tags" : {
-            "Info" : "Test"
+        "tags": {
+            "Info": "Test"
         },
         "time" : datetime.datetime.now(),
         "fields" : {
@@ -127,13 +160,13 @@ if __name__ == "__main__":
     db = Database()
     db.setDatabase("root", "root", "DefaultDatabase")
     #db.createDatabase()
-    #db.update(data)
+    #db.insert(data)
     #db.delete("TestTable", "locked", "bla")
-    #print(db.print_latest_rows("TestTable", 5))
+    print(db.print_latest_rows("TestTable", 5))
     #print(db.print_everything("TestTable"))
     #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
     print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
 
-
+    # PAYLOAD RELATED THINGS ARE UNTESTED
 
 
