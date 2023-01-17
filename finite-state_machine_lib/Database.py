@@ -4,12 +4,14 @@ from columnar import columnar
 class Database:
     def __init__(self):
         self.__client = None
-        self.__payload = []
+        self.__payload = {}
         self.__columns = None
 
     # Sets the FSM database
     def setDatabase(self, name, password, dbName):
         assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
+        if self.__client is not None:
+            self.__client.close()
         self.__client = InfluxDBClient('localhost', 8086, name, password, dbName)
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
@@ -18,6 +20,8 @@ class Database:
         assert isinstance(host, str), "Input is not a String"
         assert isinstance(port, int), "The port number has to be an integer"
         assert isinstance(username, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
+        if self.__client is not None:
+            self.__client.close()
         self.__client = InfluxDBClient(host, port, username, password, dbName)
         self.__client.create_database(dbName)
         #self.__client.get_list_database()
@@ -137,6 +141,11 @@ class Database:
         else:
             self.__payload["tags"] = tags
 
+    def __del__(self):
+        self.__client.close()
+
+def payload_test():
+    pass
 
 # for testing:
 if __name__ == "__main__":
