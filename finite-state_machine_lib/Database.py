@@ -1,3 +1,5 @@
+import time
+
 from influxdb import InfluxDBClient
 from columnar import columnar
 
@@ -36,11 +38,12 @@ class Database:
             return False    #borde kanske vara en exception
         return True
 
-    def update(self, values):
+    def update(self, values:list):
         assert len(values) == len(self.__columns), "Size of values do not match size of stored columns"
         data = self.__payload
         data["time"] = datetime.datetime.now()
-        for i, c in self.__columns:
+        data["fields"] = {}
+        for i, c in enumerate(self.__columns):
             data["fields"][c] = values[i]
         self.__client.write_points([data])
 
@@ -136,7 +139,7 @@ class Database:
         self.__payload["tags"] = tags
 
     def payload_add_tags(self, tags: dict):
-        if "tags" in self.__playload:
+        if "tags" in self.__payload:
             self.__payload["tags"].update(tags)
         else:
             self.__payload["tags"] = tags
@@ -145,13 +148,25 @@ class Database:
         self.__client.close()
 
 def payload_test():
-    pass
+    table = "PayloadTable"
+    db = Database()
+    db.setDatabase("root", "root", "DefaultDatabase")
+    db.set_payload(table, ["Col1", "Col2"], tags={"Tag" : "TestTag4"})
+    db.update(["Nr1", "Nr2"])
+    print(db.print_everything(table))
+    time.sleep(5)
+    db.payload_set_tags({"Tag2" : "TestTag4"})
+    db.update(["nr1", "nr2"])
+    print(db.print_everything(table))
+    del db
 
 # for testing:
 if __name__ == "__main__":
     import datetime
 
-    col1 = 1
+    payload_test()
+
+    """col1 = 1
     col2 = 2
 
     data = {
@@ -175,7 +190,7 @@ if __name__ == "__main__":
     #print(db.print_everything("TestTable"))
     #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
     print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
-
+    """
     # PAYLOAD RELATED THINGS ARE UNTESTED
 
 
