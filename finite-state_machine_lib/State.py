@@ -45,6 +45,12 @@ class State:
                 return default_case
         raise Exception("Transition not found") # maybe create a new Exception
 
+    def has_transition(self):
+        if len(self.__connections) > 0:
+            return True
+        else:
+            return False
+
     def run_function(self, arg=None):
         if self.__static_parameter is None:
             if arg is None:

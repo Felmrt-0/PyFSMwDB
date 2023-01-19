@@ -9,7 +9,9 @@ class FSM:
         self.__done = False
         self.__database = None
 
-    def run(self, inp=None):
+    def run(self, inp=None, deadend_check:bool=True):
+        if deadend_check:
+            assert self.deadend_check(), "Dead-end detected"
         argument = inp
 
         while not self.__done:
@@ -31,6 +33,12 @@ class FSM:
             return self.__currentState.run_function(argument)
         else:
             return self.__currentState.run_function()
+
+    def deadend_check(self):
+        for s in self.__states:
+            if not s.has_transition() and not s.is_ending():
+                return False
+        return True
 
     def add_state(self, state):
         assert not isinstance(state, list), "The module should not be a list"
@@ -88,7 +96,7 @@ def locked(database):
             "locked" : inp
         }
     }
-    database.update([data])
+    database.insert([data])
     if inp != "push" and inp != "coin":
         return
     return inp, database
@@ -106,7 +114,7 @@ def unlocked(database):
             "unlocked": inp
         }
     }
-    database.update([data])
+    database.insert([data])
     if inp != "push" and inp != "coin":
         return
     return inp, database
@@ -146,8 +154,16 @@ def logicTest(fsm):
 
 if __name__ == "__main__":
     import datetime
+    import tracemalloc
+    import time
+    import cProfile
+    import re
+    start_time = time.time()
     fsm = FSM()
     fsm.create_database()
-    stringTest(fsm)
-    fsm.run(fsm.get_database())
+    basicTest(fsm)
+    #fsm.run(fsm.get_database())
+    fsm.run()
+    stop_time = time.time()
+    print(stop_time - start_time)
 
