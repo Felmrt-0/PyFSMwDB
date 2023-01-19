@@ -93,10 +93,11 @@ class Logic:
         return True if self.__compareValueLess is not None and self.__compareValueGreater is None and self.__compareValueLess > inputV else False
     
     def in_range(self, inputV):
-        if(self.__compareValueLess < self.__compareValueGreater):
-            return True if self.__compareValueGreater is not None and self.__compareValueLess is not None and self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
-        else:
-            raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
+        if(self.__compareValueLess is not None and self.__compareValueGreater is not None):
+            if(self.__compareValueLess < self.__compareValueGreater):
+                return True if self.__compareValueGreater is not None and self.__compareValueLess is not None and self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
+            else:
+                raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
 
     def custom_logic(self, inputV):
         if inputV in self.__notEqualValue:
