@@ -1,14 +1,19 @@
+import time
+
 from influxdb import InfluxDBClient
 from columnar import columnar
 
 class Database:
     def __init__(self):
         self.__client = None
-        self.__payload = [] #
+        self.__payload = {}
+        self.__columns = None
 
     # Sets the FSM database
     def setDatabase(self, name, password, dbName):
         assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
+        if self.__client is not None:
+            self.__client.close()
         self.__client = InfluxDBClient('localhost', 8086, name, password, dbName)
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
@@ -17,19 +22,30 @@ class Database:
         assert isinstance(host, str), "Input is not a String"
         assert isinstance(port, int), "The port number has to be an integer"
         assert isinstance(username, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
+        if self.__client is not None:
+            self.__client.close()
         self.__client = InfluxDBClient(host, port, username, password, dbName)
         self.__client.create_database(dbName)
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
-    def update(self, data):
+    def insert(self, data):
         if isinstance(data, list):
             self.__client.write_points(data)
         elif isinstance(data, dict):
             self.__client.write_points([data])
         else:
-            return False    #borde kanse vara en exception
+            return False    #borde kanske vara en exception
         return True
+
+    def update(self, values:list):
+        assert len(values) == len(self.__columns), "Size of values do not match size of stored columns"
+        data = self.__payload
+        data["time"] = datetime.datetime.now()
+        data["fields"] = {}
+        for i, c in enumerate(self.__columns):
+            data["fields"][c] = values[i]
+        self.__client.write_points([data])
 
     def delete(self, table, col, value):
         res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
@@ -104,18 +120,59 @@ class Database:
         except (KeyError, IndexError):
             return
 
+    def set_payload(self, table, columns, tags:dict=None):
+        self.__columns = columns
+
+        if tags is not None:
+            self.__payload = {
+                "measurement" : table,
+                "time" : datetime.datetime.now(),
+                "tags" : tags
+            }
+        else:
+            self.__payload = {
+                "measurement": table,
+                "time": datetime.datetime.now()
+            }
+
+    def payload_set_tags(self, tags: dict):
+        self.__payload["tags"] = tags
+
+    def payload_add_tags(self, tags: dict):
+        if "tags" in self.__payload:
+            self.__payload["tags"].update(tags)
+        else:
+            self.__payload["tags"] = tags
+
+    def __del__(self):
+        self.__client.close()
+
+def payload_test():
+    table = "PayloadTable"
+    db = Database()
+    db.setDatabase("root", "root", "DefaultDatabase")
+    db.set_payload(table, ["Col1", "Col2"], tags={"Tag" : "TestTag4"})
+    db.update(["Nr1", "Nr2"])
+    print(db.print_everything(table))
+    time.sleep(5)
+    db.payload_set_tags({"Tag2" : "TestTag4"})
+    db.update(["nr1", "nr2"])
+    print(db.print_everything(table))
+    del db
 
 # for testing:
 if __name__ == "__main__":
     import datetime
 
-    col1 = 1
+    payload_test()
+
+    """col1 = 1
     col2 = 2
 
     data = {
         "measurement" : "TestTable",
-        "tags" : {
-            "Info" : "Test"
+        "tags": {
+            "Info": "Test"
         },
         "time" : datetime.datetime.now(),
         "fields" : {
@@ -127,13 +184,13 @@ if __name__ == "__main__":
     db = Database()
     db.setDatabase("root", "root", "DefaultDatabase")
     #db.createDatabase()
-    #db.update(data)
+    #db.insert(data)
     #db.delete("TestTable", "locked", "bla")
-    #print(db.print_latest_rows("TestTable", 5))
+    print(db.print_latest_rows("TestTable", 5))
     #print(db.print_everything("TestTable"))
     #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
     print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
-
-
+    """
+    # PAYLOAD RELATED THINGS ARE UNTESTED
 
 
