@@ -30,11 +30,17 @@ class State:
             default_case = None
             for key, item in self.__connections.items():
                 if isinstance(key, Logic):
-                    lower_bound, upper_bound = key.get_type()
+                    """lower_bound, upper_bound = key.get_type()
                     if key.is_default():
                         default_case = item
                     elif lower_bound < float(condition) < upper_bound: # Love u Python <3
+                        return item"""
+                    #if key.in_range(float(condition)) or key.greater_than(float(condition)) or key.less_than(float(condition)):
+                    if key.in_range(float(condition)):
                         return item
+                    elif key.greater_than(float(condition)) or key.less_than(float(condition)):
+                        return item
+
             if default_case is not None:
                 return default_case
         raise Exception("Transition not found") # maybe create a new Exception
