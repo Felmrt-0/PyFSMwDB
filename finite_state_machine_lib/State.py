@@ -1,4 +1,5 @@
-from Logic import *
+#from Logic import *
+from finite_state_machine_lib.Logic import Logic
 
 class State:
     def __init__(self, function, static_parameter=None, name=None, ending=False):

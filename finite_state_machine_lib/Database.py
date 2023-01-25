@@ -10,7 +10,18 @@ class Database:
         self.__columns = None
 
     # Sets the FSM database
-    def setDatabase(self, name, password, dbName):
+    def set_database(self, name:str, password:str, dbName:str):
+        """
+
+        :param name: The name of the user
+        :param password: The password of the user
+        :param dbName: The name of the desired database
+        :return: None
+        """
+        """
+        Sets the desired database as the current one, stored as an instance variable. 
+        If a database is already open it's closed first. 
+        """
         assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
         if self.__client is not None:
             self.__client.close()
@@ -18,7 +29,20 @@ class Database:
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
 
-    def createDatabase(self, host='localhost', port=8086, username='root', password='root', dbName="DefaultDatabase"):
+    def create_database(self, host='localhost', port=8086, username='root', password='root', dbName="DefaultDatabase"):
+        """
+
+        :param host:
+        :param port:
+        :param username: The name of the user
+        :param password: The password of the user
+        :param dbName: The name of the desired database
+        :return: None
+        """
+        """
+        Creates a new database and sets it as the current one, stored as an instance variable. 
+        If a database is already open it's closed first. 
+        """
         assert isinstance(host, str), "Input is not a String"
         assert isinstance(port, int), "The port number has to be an integer"
         assert isinstance(username, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
@@ -28,6 +52,13 @@ class Database:
         self.__client.create_database(dbName)
         #self.__client.get_list_database()
         self.__client.switch_database(dbName)
+
+    def close_database(self):
+        """
+        Closes the open database.
+        :return: None
+        """
+        self.__client.close()
 
     def insert(self, data):
         if isinstance(data, list):
@@ -39,6 +70,11 @@ class Database:
         return True
 
     def update(self, values:list):
+        """
+        Updates the table with new values depending on the instance variables: payload and columns
+        :param values: The value to be entered into the column.
+        :return: None
+        """
         assert len(values) == len(self.__columns), "Size of values do not match size of stored columns"
         data = self.__payload
         data["time"] = datetime.datetime.now()
@@ -48,6 +84,13 @@ class Database:
         self.__client.write_points([data])
 
     def delete(self, table, col, value):
+        """
+        Deletes the values from the seleted table where col == value.
+        :param table: The table to delete from
+        :param col: The name of the columns
+        :param value: The value the columns might contain
+        :return: None
+        """
         res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
         if len(res.raw["series"]) == 0:
             return
@@ -145,12 +188,13 @@ class Database:
             self.__payload["tags"] = tags
 
     def __del__(self):
-        self.__client.close()
+        if self.__client is not None:
+            self.__client.close()
 
 def payload_test():
     table = "PayloadTable"
     db = Database()
-    db.setDatabase("root", "root", "DefaultDatabase")
+    db.set_database("root", "root", "DefaultDatabase")
     db.set_payload(table, ["Col1", "Col2"], tags={"Tag" : "TestTag4"})
     db.update(["Nr1", "Nr2"])
     print(db.print_everything(table))

@@ -1,6 +1,11 @@
-from Database import *
-from State import *
-from Logic import *
+#from Database import *
+#from State import *
+#from Logic import *
+
+from finite_state_machine_lib.Database import Database
+from finite_state_machine_lib.State import State
+from finite_state_machine_lib.Logic import Logic
+
 
 class FSM:
     def __init__(self):
@@ -61,11 +66,11 @@ class FSM:
             self.__done = True
 
     def set_database(self, name, password, dbName):
-       self.__database = Database.setDatabase(name, password, dbName)
+       self.__database = Database.set_database(name, password, dbName)
 
     def create_database(self):
         self.__database = Database()
-        self.__database.createDatabase()
+        self.__database.create_database()
 
     def get_database(self):
         return self.__database
