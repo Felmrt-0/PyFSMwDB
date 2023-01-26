@@ -1,4 +1,4 @@
-#from Logic import *
+from finite_state_machine_lib import State
 from finite_state_machine_lib.Logic import Logic
 
 class State:
@@ -22,7 +22,7 @@ class State:
     -------
 
     """
-    def __init__(self, function, static_parameter=None, name=None, ending=False):
+    def __init__(self, function, static_parameter=None, name=None, ending:bool =False):
         """
 
         :param function:
@@ -37,7 +37,7 @@ class State:
         self.__connections = {}
 
 
-    def add_transition(self, condition, target):
+    def add_transition(self, condition, target: State.State):
         self.__connections[condition] = target
 
     def set_parameter(self, parameter):
@@ -53,30 +53,26 @@ class State:
         return self.__name
 
     def get_transition(self, condition):
-        if len(self.__connections) == 1:
-            self.__ending = True
-            return self
-        else:
-            try:
-                return self.__connections[condition]
-            except KeyError:
-                default_case = None
-                for key, item in self.__connections.items():
-                    if isinstance(key, Logic):
-                        """lower_bound, upper_bound = key.get_type()
-                        if key.is_default():
-                            default_case = item
-                        elif lower_bound < float(condition) < upper_bound: # Love u Python <3
-                            return item"""
-                        #if key.in_range(float(condition)) or key.greater_than(float(condition)) or key.less_than(float(condition)):
-                        if key.in_range(float(condition)):
-                            return item
-                        elif key.greater_than(float(condition)) or key.less_than(float(condition)):
-                            return item
+        try:
+            return self.__connections[condition]
+        except KeyError:
+            default_case = None
+            for key, item in self.__connections.items():
+                if isinstance(key, Logic):
+                    """lower_bound, upper_bound = key.get_type()
+                    if key.is_default():
+                        default_case = item
+                    elif lower_bound < float(condition) < upper_bound: # Love u Python <3
+                        return item"""
+                    #if key.in_range(float(condition)) or key.greater_than(float(condition)) or key.less_than(float(condition)):
+                    if key.in_range(float(condition)):
+                        return item
+                    elif key.greater_than(float(condition)) or key.less_than(float(condition)):
+                        return item
 
-                if default_case is not None:
-                    return default_case
-            raise Exception("Transition not found") # maybe create a new Exception
+            if default_case is not None:
+                return default_case
+        raise Exception("Transition not found") # maybe create a new Exception
 
     def has_transition(self):
         if len(self.__connections) > 0:
@@ -96,7 +92,9 @@ class State:
             else:
                 res = self.__function(self.__static_parameter, arg)
         return res
+
     def isLastInList(self):
         return list(self.__connections)[-1]
+
     def is_ending(self):
         return self.__ending

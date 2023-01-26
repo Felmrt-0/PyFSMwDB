@@ -1,7 +1,3 @@
-#from Database import *
-#from State import *
-#from Logic import *
-
 from finite_state_machine_lib.Database import Database
 from finite_state_machine_lib.State import State
 from finite_state_machine_lib.Logic import Logic
@@ -47,40 +43,14 @@ class FSM:
         self.__done = False
         self.__database = None
 
-    def run(self, inp=None):
-        """
-
-        :param inp:
-        :return:
-        """
-        if isinstance(self.__currentState, FSM):
-            self.__currentState.run()
-
-        else:
-            assert isinstance(self.__currentState, State), "Current state is not an State object"
-            argument = inp
-            while not self.__done:
-                if argument is not None:
-                    res = self.__currentState.run_function(argument)
-                else:
-                    res = self.__currentState.run_function()
-                if isinstance(res, list) or isinstance(res, tuple):
-                    if len(res) == 2:
-                        cond, argument = res
-                    else:
-                        cond, *argument = res
-                else:
-                    cond = res
-                    argument = None
-                self.__switch_state(cond)
     def run(self, inp=None, deadend_check:bool=True):
         if isinstance(self.__currentState, FSM):
             self.__currentState.run()
 
         else:
 
-            if deadend_check:
-                assert self.deadend_check(), "Dead-end detected"
+            if deadend_check:   # this should probably be moved outside the if statement
+                assert not self.deadend_check(), "Dead-end detected"
             argument = inp
 
             while not self.__done:
@@ -103,15 +73,17 @@ class FSM:
             else:
                 return self.__currentState.run_function()
 
-    def FSM_check(self):
-        return
-    def deadend_check(self):
+    def deadend_check(self) -> bool:
+        """
+        Checks the states for dead-ends.
+        :return: True if a dead-end is detected, False otherwise
+        """
         for s in self.__states:
             if not s.has_transition() and not s.is_ending():
-                return False
-        return True
+                return True
+        return False
 
-    def add_state(self, state):
+    def add_state(self, state: State):
         """
 
         :param state:
@@ -124,7 +96,7 @@ class FSM:
         if self.__currentState is None:
             self.__currentState = state
 
-    def add_states(self, state):
+    def add_states(self, state:list[State]):
         """
 
         :param state:
@@ -134,7 +106,7 @@ class FSM:
         for s in state:
             self.add_state(s)
 
-    def set_current_state(self, state):
+    def set_current_state(self, state: State):
         """
 
         :param state:
@@ -165,7 +137,7 @@ class FSM:
         self.__database = Database()
         self.__database.create_database()
 
-    def get_database(self):
+    def get_database(self) -> Database:
         """
 
         :return:
