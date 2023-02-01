@@ -44,34 +44,38 @@ class FSM:
         self.__database = None
 
     def run(self, inp=None, deadend_check:bool=True):
-        if isinstance(self.__currentState, FSM):
-            self.__currentState.run()
+        """
+        It will run the function, save its return value as 'condition' and 'arguement' if any, otherwise just
+        'condition'. Condition will decide what module is run next and any argument will be passed to it.
+        deadend_check will be passed down to any sub FSMs.
 
-        else:
+        :param inp: input argument to be sent into the first function
+        :param deadend_check: whether a dead-end check will be run before execution
+        :return: whatever the last State returns
+        """
+        if deadend_check:
+            assert not self.deadend_check(), "Dead-end detected"
+        argument = inp
 
-            if deadend_check:   # this should probably be moved outside the if statement
-                assert not self.deadend_check(), "Dead-end detected"
-            argument = inp
-
-            while not self.__done:
-                if argument is not None:
-                    res = self.__currentState.run_function(argument)
-                else:
-                    res = self.__currentState.run_function()
-                if isinstance(res, list) or isinstance(res, tuple):
-                    if len(res) == 2:
-                        cond, argument = res
-                    else:
-                        cond, *argument = res
-                else:
-                    cond = res
-                    argument = None
-                self.__switch_state(cond)
-
+        while not self.__done:
             if argument is not None:
-                return self.__currentState.run_function(argument)
+                res = self.__currentState.run_function(argument)
             else:
-                return self.__currentState.run_function()
+                res = self.__currentState.run_function()
+            if isinstance(res, list) or isinstance(res, tuple):
+                if len(res) == 2:
+                    cond, argument = res
+                else:
+                    cond, *argument = res
+            else:
+                cond = res
+                argument = None
+            self.__switch_state(cond)
+
+        if argument is not None:
+            return self.__currentState.run_function(argument)
+        else:
+            return self.__currentState.run_function()
 
     def deadend_check(self) -> bool:
         """
@@ -85,9 +89,9 @@ class FSM:
 
     def add_state(self, state: State):
         """
-
-        :param state:
-        :return:
+        Adds a state to the FSM's state list
+        :param state: this state will be added to a list of states
+        :return: None
         """
         assert not isinstance(state, list), "The module should not be a list"
         if isinstance(state, FSM):
@@ -98,9 +102,9 @@ class FSM:
 
     def add_states(self, state:list[State]):
         """
-
-        :param state:
-        :return:
+        Iterates through the input to add all states into the state list
+        :param state: a list of states
+        :return: None
         """
         assert isinstance(state, list), "The input should be a list"
         for s in state:
@@ -108,18 +112,20 @@ class FSM:
 
     def set_current_state(self, state: State):
         """
-
-        :param state:
-        :return:
+        Sets the input state as the starting point.
+        By default, the first state added to the list will be the starting point.
+        :param state: the fsm will start from this state
+        :return: None
         """
         assert not isinstance(state, list), "The module should not be a list"
         self.__currentState = state
 
     def __switch_state(self, condition):
         """
-
-        :param condition:
-        :return:
+        Updates current state to the next one based one the given condition.
+        Sets flag if the new state is and endpoint.
+        :param condition: condition to switch state
+        :return: None
         """
 
         self.__currentState = self.__currentState.get_transition(condition)
@@ -127,20 +133,27 @@ class FSM:
             self.__done = True
 
     def set_database(self, name, password, dbName):
-       self.__database = Database.set_database(name, password, dbName)
+        """
+        Sets the current database based on the arguments given.
+        :param name: the name of the user
+        :param password: the password of the user
+        :param dbName: the name of the database
+        :return: None
+        """
+        self.__database = Database.set_database(name, password, dbName)
 
     def create_database(self):
         """
-
-        :return:
+        Creates a Database object and runs its create_database() function.
+        :return: None
         """
         self.__database = Database()
         self.__database.create_database()
 
     def get_database(self) -> Database:
         """
-
-        :return:
+        Returns the current database.
+        :return: current database
         """
         return self.__database
 

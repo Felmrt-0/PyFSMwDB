@@ -3,7 +3,6 @@ import math
 from finite_state_machine_lib.FSM import FSM
 from finite_state_machine_lib.State import State
 from finite_state_machine_lib.Logic import Logic
-from finite_state_machine_lib.Database import Database
 import datetime
 import time
 from termcolor import colored   # do not add termcolor to project requirements
@@ -61,6 +60,7 @@ def basicTest():
     fsm.add_states([state1, state2, state3])
     state1.add_transition(2, state2)
     state2.add_transition(3, state3)
+    state2.add_transition(1, state1)
     fsm.run()
 
 def dbWrite(db, table: str):
@@ -110,7 +110,7 @@ def dbTest():
 
 
 if __name__ == "__main__":
-    inp = input("Enter test nr")
+    inp = input("Enter test nr: ")
     print()
     match inp:
         case "1":
