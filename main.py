@@ -108,6 +108,101 @@ def dbTest():
     fsm.add_states([state1, state2])
     fsm.run(inp="DemoTable")
 
+class SpeedT:
+    @staticmethod
+    def farg(inp):
+        if isinstance(inp, list):
+            current = inp[1]
+            max = inp[0]
+        else:
+            current = 1
+            max = inp
+        if current <= max:
+            return True, max, current+1
+        return False
+
+    @staticmethod
+    def fdb(db, max=None):
+        table = "SpeedT"
+        if max is not None:
+            current = 1
+            data = {
+                "measurement": table,
+                "time": datetime.datetime.now(),
+                "fields": {
+                    "Current": current,
+                    "Max": max
+                }
+            }
+            db.insert([data])
+            return True
+        else:
+            col, data = db.get_latest_rows(table, number_of_rows=1)
+            cur, m = None, None
+            for i, c in enumerate(col):
+                if c == "Current":
+                    cur = i
+                elif c == "Max":
+                    m = i
+                if cur is not None and m is not None:
+                    break
+
+            current = data[0][cur]
+            max = data[0][m]
+            if current <= max:
+                data = {
+                    "measurement": table,
+                    "time": datetime.datetime.now(),
+                    "fields": {
+                        "Current": current+1,
+                        "Max" : max
+                    }
+                }
+                db.insert([data])
+                return True
+            return False
+
+    @staticmethod
+    def endNode():
+        return
+
+def speedTest():
+    print(colored("Running dbTest", "blue"))
+    loops = int(input("Enter how many loops to run: "))
+
+    fsmArg = FSM()
+    state1 = State(SpeedT.farg)
+    endState = State(SpeedT.endNode, ending=True)
+    state1.add_transition(True, state1)
+    state1.add_transition(False, endState)
+    fsmArg.add_states([state1, endState])
+    fsmArg.set_current_state(state1)
+
+    startTimeArg = time.time()
+    fsmArg.run(loops)
+    stopTimeArg = time.time()
+
+    print("Arguments took", colored(str(stopTimeArg-startTimeArg) + " sek", "red"))
+
+    fsmDB = FSM()
+    fsmDB.create_database()
+    state1 = State(SpeedT.fdb, static_parameter=fsmDB.get_database())
+    endState = State(SpeedT.endNode, ending=True)
+    state1.add_transition(True, state1)
+    state1.add_transition(False, endState)
+    fsmDB.add_states([state1, endState])
+    fsmDB.set_current_state(state1)
+
+    startTimeDB = time.time()
+    fsmDB.run(loops)
+    stopTimeDB = time.time()
+
+    print("Database took", colored(str(stopTimeDB-startTimeDB) + " sek", "red"))
+
+    if input("Clear table? [Y/N]").lower() == "y":
+        fsmDB.get_database().custom_query("DELETE WHERE time > 0")
+        print("Cleared")
+
 
 if __name__ == "__main__":
     inp = input("Enter test nr: ")
@@ -122,10 +217,15 @@ if __name__ == "__main__":
         case "3":
             dbTest()
 
+        case "4":
+            speedTest()
+
         case other:
             turnstile()
             _ = input()
             basicTest()
             _ = input()
             dbTest()
+            _ = input()
+            speedTest()
 
