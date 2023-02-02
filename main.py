@@ -63,6 +63,34 @@ def basicTest():
     state2.add_transition(1, state1)
     fsm.run()
 
+def arg1(arg):
+    val = arg + 1
+    print("Your value plus one is", colored(str(val), "red"), end="")
+    _ = input()
+    return True, val
+
+def arg2(arg):
+    val = arg + 1
+    print("Your value plus two is", colored(str(val), "red"))
+
+def argTest():
+    print(colored("Running argTest", "blue"))
+    print("Press Enter")
+    _ = input()
+    inp = input("Enter a number: ")
+    while True:
+        try:
+            inp = int(inp)
+            break
+        except ValueError:
+            inp = input("No, a number: ")
+    fsm = FSM()
+    state1 = State(arg1)
+    state2 = State(arg2, ending=True)
+    state1.add_transition(True, state2)
+    fsm.add_states([state1, state2])
+    fsm.run(inp)
+
 def dbWrite(db, table: str):
     print("You're in the write function\nEnter a number into database: ", end="")
     inp = input()
@@ -201,7 +229,88 @@ def speedTest():
 
     if input("Clear table? [Y/N]").lower() == "y":
         fsmDB.get_database().custom_query("DELETE WHERE time > 0")
-        print("Cleared")
+        print("Cleared")"""
+    fsmDB.get_database().custom_query("DELETE WHERE time > 0")
+
+class Nestling():
+    @staticmethod
+    def fMain1(db, table):
+        print("You're in state" + colored(" main 1", "green"))
+        inp = input("Write an entry: ")
+        data = {
+            "measurement": table,
+            "tags": {
+                "Info": "Test"
+            },
+            "time": datetime.datetime.now(),
+            "fields": {
+                "Main FSM": inp
+            }
+        }
+        db.insert([data])
+        print()
+        return True, table
+
+    @staticmethod
+    def fSub1(db, table):
+        print("  You're in state" + colored(" sub 1", "yellow"))
+        col, data = db.get_latest_rows(table, number_of_rows=1)
+        index: int
+        for i, c in enumerate(col):
+            if c == "Main FSM":
+                index = i
+                break
+        print("  The string you entered was", colored(str(data[0][index]), "red"))
+        print()
+        return True, table
+
+    @staticmethod
+    def fSub2(db, table):
+        print("  You're in state" + colored(" sub 2", "yellow"))
+        inp = input("  Write another entry: ")
+        data = {
+            "measurement": table,
+            "tags": {
+                "Info": "Test"
+            },
+            "time": datetime.datetime.now(),
+            "fields": {
+                "Sub FSM": inp
+            }
+        }
+        db.insert([data])
+        print()
+        return True, table
+
+    @staticmethod
+    def fMain2(db, table):
+        print("You're in state" + colored(" main 2", "green"))
+        col, data = db.get_latest_rows(table, number_of_rows=1)
+        index: int
+        for i, c in enumerate(col):
+            if c == "Sub FSM":
+                index = i
+                break
+        print("The string you entered was", colored(str(data[0][index]), "red"))
+
+def nestedTest():
+    fsmMain = FSM()
+    fsmMain.create_database()
+    db = fsmMain.get_database()
+    stateM1 = State(Nestling.fMain1, static_parameter=db)
+
+    fsmSub = FSM()
+    stateS1 = State(Nestling.fSub1, static_parameter=db)
+    stateS2 = State(Nestling.fSub2, static_parameter=db, ending=True)
+    stateS1.add_transition(True, stateS2)
+    stateSubFSM = State(fsmSub.run)
+    fsmSub.add_states([stateS1, stateS2])
+
+    stateM2 = State(Nestling.fMain2, static_parameter=db, ending=True)
+    stateM1.add_transition(True, stateSubFSM)
+    stateSubFSM.add_transition(True, stateM2)
+    fsmMain.add_states([stateM1, stateSubFSM, stateM2])
+    fsmMain.run("NestTable")
 
 
 if __name__ == "__main__":
@@ -215,17 +324,27 @@ if __name__ == "__main__":
             basicTest()
 
         case "3":
-            dbTest()
+            argTest()
 
         case "4":
+            dbTest()
+
+        case "5":
             speedTest()
+
+        case "6":
+            nestedTest()
 
         case other:
             turnstile()
             _ = input()
             basicTest()
             _ = input()
+            argTest()
+            _ = input()
             dbTest()
             _ = input()
             speedTest()
-
+            _ = input()
+            nestedTest()
+"""
