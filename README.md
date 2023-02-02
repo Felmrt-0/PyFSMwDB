@@ -11,7 +11,7 @@ InfluxDB is needed in order to run with the default database. In addition to the
 
 ## Linux
 ```bash
-sudo apt install infuxdb
+sudo apt install influxdb
 ```
 
 ## Windows
