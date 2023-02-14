@@ -28,5 +28,5 @@ class CustomLogicException(Exception):
 
 if __name__ == "__main__":
     #raise TransitionNotFoundException(condition=2, connections={"ne": 2})
-    raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit", tmp="noe")
+    raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit")
     #raise CustomLogicException("hej")
