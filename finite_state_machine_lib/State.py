@@ -1,4 +1,5 @@
 from finite_state_machine_lib import State
+from finite_state_machine_lib.CExceptions import TransitionNotFoundException
 from finite_state_machine_lib.Logic import Logic
 
 class State:
@@ -101,7 +102,7 @@ class State:
 
             if default_case is not None:
                 return default_case
-        raise Exception("Transition not found") # maybe create a new Exception
+        raise TransitionNotFoundException(condition, self.__connections)
 
     def has_transition(self) -> bool:
         """
