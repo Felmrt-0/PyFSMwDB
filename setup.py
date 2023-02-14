@@ -10,7 +10,7 @@ setup(
     description='My first Python library',
     author='Me',
     license='ME',
-    python_requires=">3.10",
+    python_requires=">=3.10", # might be strictly ">3.10"
     install_requires=requirements,
     setup_requires=[],  # tror inte den här är nödvändig
     tests_require=[],   # skulle gissa att den här bara är specifikt för tester

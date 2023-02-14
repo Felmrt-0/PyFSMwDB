@@ -60,14 +60,13 @@ class Database:
         """
         self.__client.close()
 
-    def insert(self, data):
+    def insert(self, data: dict):
+        assert isinstance(data, list) or isinstance(data, dict), "Data has to be a dictionary or list of one dictionary"
+        # TEST IF THE LIST CAN HAVE MANY ELEMENTS
         if isinstance(data, list):
             self.__client.write_points(data)
         elif isinstance(data, dict):
             self.__client.write_points([data])
-        else:
-            return False    #borde kanske vara en exception
-        return True
 
     def update(self, values:list):
         """

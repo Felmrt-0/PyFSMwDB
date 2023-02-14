@@ -1,6 +1,9 @@
 import math
 from multiprocessing import Condition
 
+from finite_state_machine_lib.CustomExceptions import LogicException, CustomLogicException
+
+
 class Logic:
     """
     A class used for creating logical expressions
@@ -81,7 +84,7 @@ class Logic:
             self.__compareValueLess = less
             self.__compareValueGreater = greater
         else:
-            raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
+            raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit")
     
     def debugLimits(self):
         """
@@ -108,7 +111,7 @@ class Logic:
             stringSplit = stringFix.split(",")
             self.__set_values(stringSplit)
         else:
-            raise Exception("The custom logic is written incorrectly")
+            raise CustomLogicException("The custom logic is written incorrectly")
 
     # makes sure that the input string in set_custom_logic only contains characters that are allowed
     def __check_string(self, inputV):
@@ -129,7 +132,7 @@ class Logic:
                 elif x[0] == '>':
                     self.__compareValueGreater = float(x[1:])
             except:
-                raise Exception("Formatting of custom logic is incorrect")
+                raise CustomLogicException("Formatting of custom logic is incorrect")
         return
 
     def greater_than(self, inputV):
@@ -170,7 +173,7 @@ class Logic:
             if(self.__compareValueLess < self.__compareValueGreater):
                 return True if self.__compareValueGreater is not None and self.__compareValueLess is not None and self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
             else:
-                raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
+                raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit")
         else:
             raise Exception("Lower or upper bound not set")
 

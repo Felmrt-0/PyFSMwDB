@@ -1,5 +1,5 @@
 from finite_state_machine_lib import State
-from finite_state_machine_lib.CExceptions import TransitionNotFoundException
+from finite_state_machine_lib.CustomExceptions import TransitionNotFoundException
 from finite_state_machine_lib.Logic import Logic
 
 class State:

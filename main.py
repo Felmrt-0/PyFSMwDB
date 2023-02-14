@@ -195,8 +195,9 @@ class SpeedT:
         return
 
 def speedTest():
-    print(colored("Running dbTest", "blue"))
+    print(colored("Running speedTest", "blue"))
     loops = int(input("Enter how many loops to run: "))
+    #loops = inp
 
     fsmArg = FSM()
     state1 = State(SpeedT.farg)
@@ -227,12 +228,12 @@ def speedTest():
 
     print("Database took", colored(str(stopTimeDB-startTimeDB) + " sek", "red"))
 
+
     if input("Clear table? [Y/N]").lower() == "y":
         fsmDB.get_database().custom_query("DELETE WHERE time > 0")
-        print("Cleared")"""
-    fsmDB.get_database().custom_query("DELETE WHERE time > 0")
+        print("Cleared")
 
-class Nestling():
+class Nestling:
     @staticmethod
     def fMain1(db, table):
         print("You're in state" + colored(" main 1", "green"))
@@ -314,6 +315,7 @@ def nestedTest():
 
 
 if __name__ == "__main__":
+
     inp = input("Enter test nr: ")
     print()
     match inp:
@@ -347,4 +349,3 @@ if __name__ == "__main__":
             speedTest()
             _ = input()
             nestedTest()
-"""
