@@ -38,7 +38,8 @@ class Logic:
         Returns True if the input value fulfills the logic that was set in "set_custom_logic".
     """
 
-    def __init__(self):
+    def __init__(self, logic=False):
+        self.customLogic = logic    # set true when using custom logic
         self.__compareValueGreater = None
         self.__compareValueLess = None
         self.__notEqualValue = []
