@@ -5,8 +5,7 @@ from finite_state_machine_lib.CustomExceptions import LogicException, CustomLogi
 
 
 class Logic:
-
-   """
+    """
     A class used for creating logical expressions
 
     Methods
@@ -39,12 +38,13 @@ class Logic:
         Returns True if the input value fulfills the logic that was set in "set_custom_logic".
     """
 
-    def __init__(self, logic = False):
-        self.customLogic = logic    # set true when using custom logic
-        self.__compareValueGreater = None
-        self.__compareValueLess = None
-        self.__notEqualValue = []
-        self.__EqualValue = []
+    #def __init__(self, logic=False):
+    def __init__(self, logic=False):
+       self.customLogic = logic  # set true when using custom logic
+       self.__compareValueGreater = None
+       self.__compareValueLess = None
+       self.__notEqualValue = []
+       self.__EqualValue = []
     
     def get___compareValueGreater(self):
         return self.__compareValueGreater

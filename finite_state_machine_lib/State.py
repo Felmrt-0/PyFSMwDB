@@ -68,6 +68,7 @@ class State:
         :param name: the new name
         :return: None
         """
+        assert isinstance(name, str), "Name should be a string"
         self.__name = name
 
     def get_name(self):
@@ -141,3 +142,8 @@ class State:
         :return: True if the state is an ending. False otherwise
         """
         return self.__ending
+
+    def get_function(self):
+        return self.__function
+    def get_connections(self):
+        return self.__connections

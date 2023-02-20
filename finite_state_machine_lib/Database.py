@@ -31,9 +31,10 @@ class Database:
 
     def create_database(self, host='localhost', port=8086, username='root', password='root', dbName="DefaultDatabase"):
         """
+        Creates a new InfluxDB database and sets it as client for the database object
 
         :param host:
-        :param port:
+        :param port: The network port that the database will use
         :param username: The name of the user
         :param password: The password of the user
         :param dbName: The name of the desired database
@@ -56,21 +57,31 @@ class Database:
     def close_database(self):
         """
         Closes the open database.
+
         :return: None
         """
         self.__client.close()
 
-    def insert(self, data: dict):
-        assert isinstance(data, list) or isinstance(data, dict), "Data has to be a dictionary or list of one dictionary"
-        # TEST IF THE LIST CAN HAVE MANY ELEMENTS
+    def insert(self, data):
+        """
+        Inserts a list or dictanary as data into the database
+
+        :param data: The data that will be inserted into the database
+        :return: True
+        """
+        assert isinstance(data, list) or isinstance(data, dict), "Data should be a list or a dictunary"
         if isinstance(data, list):
             self.__client.write_points(data)
         elif isinstance(data, dict):
             self.__client.write_points([data])
+        else:
+            return False    #borde kanske vara en exception
+        return True
 
     def update(self, values:list):
         """
         Updates the table with new values depending on the instance variables: payload and columns
+
         :param values: The value to be entered into the column.
         :return: None
         """
@@ -85,6 +96,7 @@ class Database:
     def delete(self, table, col, value):
         """
         Deletes the values from the seleted table where col == value.
+
         :param table: The table to delete from
         :param col: The name of the columns
         :param value: The value the columns might contain
@@ -109,6 +121,13 @@ class Database:
             self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + t + "';")
 
     def get_latest_rows(self, table : str, number_of_rows=1):
+        """
+
+
+        :param table:
+        :param number_of_rows:
+        :return:
+        """
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
         res = res.raw["series"][0]
         data = res["values"][::-1]
@@ -116,6 +135,12 @@ class Database:
         return headers, data
 
     def get_first_rows(self, table : str, number_of_rows=1):
+        """
+
+        :param table:
+        :param number_of_rows:
+        :return:
+        """
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
         res = res.raw["series"][0]
         data = res["values"][::-1]
@@ -123,6 +148,11 @@ class Database:
         return headers, data
 
     def get_everything(self, table : str):
+        """
+
+        :param table:
+        :return:
+        """
         res = self.__client.query("SELECT * FROM " + table + ";")
         res = res.raw['series'][0]
         headers = res["columns"]
@@ -131,6 +161,12 @@ class Database:
 
     @staticmethod
     def print_formatter(headers, data):
+        """
+
+        :param headers:
+        :param data:
+        :return:
+        """
         list_of_rows = []
         for d in data:
             list_of_elements=[]
@@ -143,18 +179,40 @@ class Database:
         return columnar(data=list_of_rows, headers=headers, justify="c", min_column_width=10)
 
     def print_latest_rows(self, table : str, number_of_rows=1):
+        """
+
+        :param table:
+        :param number_of_rows:
+        :return:
+        """
         headers, data = self.get_latest_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
 
     def print_first_rows(self, table : str, number_of_rows=1):
+        """
+
+        :param table:
+        :param number_of_rows:
+        :return:
+        """
         headers, data = self.get_first_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
 
     def print_everything(self, table : str):
+        """
+
+        :param table:
+        :return:
+        """
         headers, data = self.get_everything(table)
         return self.print_formatter(headers, data)
 
     def custom_query(self, query : str):
+        """
+
+        :param query:
+        :return:
+        """
         res = self.__client.query(query)
         try:
             res = res.raw['series'][0]
@@ -163,6 +221,13 @@ class Database:
             return
 
     def set_payload(self, table, columns, tags:dict=None):
+        """
+
+        :param table:
+        :param columns:
+        :param tags:
+        :return:
+        """
         self.__columns = columns
 
         if tags is not None:
@@ -178,18 +243,34 @@ class Database:
             }
 
     def payload_set_tags(self, tags: dict):
+        """
+
+        :param tags:
+        :return:
+        """
         self.__payload["tags"] = tags
 
     def payload_add_tags(self, tags: dict):
+        """
+
+        :param tags:
+        :return:
+        """
         if "tags" in self.__payload:
             self.__payload["tags"].update(tags)
         else:
             self.__payload["tags"] = tags
 
     def __del__(self):
+        """
+
+        :return:
+        """
         if self.__client is not None:
             self.__client.close()
 
+
+# test function
 def payload_test():
     table = "PayloadTable"
     db = Database()
