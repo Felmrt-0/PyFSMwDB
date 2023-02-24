@@ -4,6 +4,74 @@ from influxdb import InfluxDBClient
 from columnar import columnar
 
 class Database:
+    """
+    A database class that contains a database and payload
+
+    Attributes
+    ----------
+    client : database
+        function that runs when this state runs
+
+    payload : dict
+        payload to add to database
+
+    columns : int
+        number of columns the table in database has??
+
+    Methods
+    -------
+    set_database(name, password, dbname)
+        Connects to a database
+
+    create_database()
+        creates a Influx 2.0 database
+
+    close_database()
+        closes database
+
+    insert(data)
+        inserts data into database
+
+    update(values:list)
+        updates a table
+
+    delete(table, col, value)
+        removes value from a specific column of table
+
+    get_latest_rows(table, rows)
+        fetches the latest number of rows  of table
+
+    get_first_rows(table, rows)
+        fetches the first number of rows of table
+
+    get_everything(table)
+        fetches entire Table
+
+    print_formatter()
+
+    print_latest_rows(table : str, rows)
+        Prints the latest number of rows  of table in the terminal
+
+    print_first_rows(table : str, rows)
+        Prints the first number of rows  of table in the terminal
+
+    print_everything(table : str)
+        Prints entire table into terminal
+
+    custom_query(query : str)
+
+
+    set_payload(table, columns, tags:dict=None)
+
+
+    payload_set_tags(tags: dict)
+
+
+    payload_add_tags(tags: dict)
+
+
+
+    """
     def __init__(self):
         self.__client = None
         self.__payload = {}
@@ -12,6 +80,7 @@ class Database:
     # Sets the FSM database
     def set_database(self, name:str, password:str, dbName:str):
         """
+        Sets an exsiting Influx 2.0 database to be utilized
 
         :param name: The name of the user
         :param password: The password of the user
@@ -122,7 +191,7 @@ class Database:
 
     def get_latest_rows(self, table : str, number_of_rows=1):
         """
-
+        gets the last number of row from a table
 
         :param table:
         :param number_of_rows:
@@ -136,7 +205,7 @@ class Database:
 
     def get_first_rows(self, table : str, number_of_rows=1):
         """
-
+        gets the first number of rows from table
         :param table:
         :param number_of_rows:
         :return:
@@ -149,6 +218,7 @@ class Database:
 
     def get_everything(self, table : str):
         """
+        fetches entire table
 
         :param table:
         :return:
@@ -180,6 +250,7 @@ class Database:
 
     def print_latest_rows(self, table : str, number_of_rows=1):
         """
+        prints latest number of rows of table into the terminal
 
         :param table:
         :param number_of_rows:
@@ -190,6 +261,7 @@ class Database:
 
     def print_first_rows(self, table : str, number_of_rows=1):
         """
+        prints first number of rows from table into the terminal
 
         :param table:
         :param number_of_rows:
@@ -200,6 +272,7 @@ class Database:
 
     def print_everything(self, table : str):
         """
+        prints entire table into terminal
 
         :param table:
         :return:
@@ -222,6 +295,7 @@ class Database:
 
     def set_payload(self, table, columns, tags:dict=None):
         """
+        sets the payload structure
 
         :param table:
         :param columns:
@@ -244,6 +318,7 @@ class Database:
 
     def payload_set_tags(self, tags: dict):
         """
+        sets payload tag
 
         :param tags:
         :return:
@@ -252,6 +327,7 @@ class Database:
 
     def payload_add_tags(self, tags: dict):
         """
+        adds a payload tag
 
         :param tags:
         :return:

@@ -8,6 +8,21 @@ class Logic:
     """
     A class used for creating logical expressions
 
+     Attributes
+    ----------
+    customLogic : bool
+        set to True when custom logic is used
+
+    compareValueGreater: int float douable
+
+
+    compareValueLess : int float double
+
+    notEqualValue : list
+
+    EqualValue : list
+        Dictunary that connects states to each other
+
     Methods
     -------
     greater_than_limit(compare)

@@ -10,18 +10,53 @@ class State:
     ----------
     function : function
         function that runs when this state runs
+
     static_parameter:
+        Parameter that will be used when State runs
 
     name : Str
         Names the state
-    ending :
+
+    ending : bool
+        Defines if State object is an endstate
 
     connections : dict
-        Dictunary that connects states to eachother
+        Dictunary that connects states to each other
 
     Methods
     -------
+    add_transition(condition, target)
+        Adds a transition to the State object
 
+    set_parameter(parameter)
+        Sets the static_parameter attribute of the State object
+
+    get_parameter()
+        Fetches the static_parameter attribute from the State object
+
+    set_name(name)
+        Sets the name attribute of the State object
+
+    get_name()
+        Fetches the name attribute from State object
+
+    get_transition(condition)
+        Gets the transition target given its chosen condition
+
+    has_transition()
+        Checks if State object has a transition
+
+    run_function(arg=None)
+        Runs the function stored in State object
+
+    is_ending()
+        Checks if the State object is an endstate
+
+    get_function()
+        Fetches the stored function from State object
+
+    get_connections()
+        Fetches the dictionary of transitions from State object
     """
     def __init__(self, function, static_parameter=None, name=None, ending:bool = False):
         """
@@ -81,8 +116,8 @@ class State:
     def get_transition(self, condition) -> State.State:
         """
         Returns the transition target given its chosen condition.
-        :param condition: a condition belonging to the state
-        :return: the state the condition points to
+        :param condition: a condition belonging to the State
+        :return: the State the condition points to
         """
         try:
             return self.__connections[condition]
@@ -144,6 +179,14 @@ class State:
         return self.__ending
 
     def get_function(self):
+        """
+        Fetches the function inside the State
+        :return: the function
+        """
         return self.__function
     def get_connections(self):
+        """
+        Returns the connections dictionary
+        :return: the connections dictionary
+        """
         return self.__connections
