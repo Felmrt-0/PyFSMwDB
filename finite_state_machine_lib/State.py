@@ -1,4 +1,5 @@
 from finite_state_machine_lib import State
+from finite_state_machine_lib.CustomExceptions import TransitionNotFoundException
 from finite_state_machine_lib.Logic import Logic
 
 class State:
@@ -67,6 +68,7 @@ class State:
         :param name: the new name
         :return: None
         """
+        assert isinstance(name, str), "Name should be a string"
         self.__name = name
 
     def get_name(self):
@@ -94,14 +96,17 @@ class State:
                     elif lower_bound < float(condition) < upper_bound: # Love u Python <3
                         return item"""
                     #if key.in_range(float(condition)) or key.greater_than(float(condition)) or key.less_than(float(condition)):
-                    if key.in_range(float(condition)):
+                    if key.custom_logic(float(condition)):
                         return item
-                    elif key.greater_than(float(condition)) or key.less_than(float(condition)):
-                        return item
+                    elif not key.customLogic: # only go in here if key is NOT custom logic
+                        if key.in_range(float(condition)):
+                            return item
+                        elif key.greater_than(float(condition)) or key.less_than(float(condition)):
+                            return item
 
             if default_case is not None:
                 return default_case
-        raise Exception("Transition not found") # maybe create a new Exception
+        raise TransitionNotFoundException(condition, self.__connections)
 
     def has_transition(self) -> bool:
         """
@@ -137,3 +142,8 @@ class State:
         :return: True if the state is an ending. False otherwise
         """
         return self.__ending
+
+    def get_function(self):
+        return self.__function
+    def get_connections(self):
+        return self.__connections

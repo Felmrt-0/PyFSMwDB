@@ -1,6 +1,9 @@
 import math
 from multiprocessing import Condition
 
+from finite_state_machine_lib.CustomExceptions import LogicException, CustomLogicException
+
+
 class Logic:
     """
     A class used for creating logical expressions
@@ -35,11 +38,23 @@ class Logic:
         Returns True if the input value fulfills the logic that was set in "set_custom_logic".
     """
 
-    def __init__(self):
-        self.__compareValueGreater = None
-        self.__compareValueLess = None
-        self.__notEqualValue = []
-        self.__EqualValue = []
+    #def __init__(self, logic=False):
+    def __init__(self, logic=False):
+       self.customLogic = logic  # set true when using custom logic
+       self.__compareValueGreater = None
+       self.__compareValueLess = None
+       self.__notEqualValue = []
+       self.__EqualValue = []
+    
+    def get___compareValueGreater(self):
+        return self.__compareValueGreater
+    def get__compareValueLess(self):
+        return self.__compareValueLess
+    def get__notEqualValue(self):
+        return self.__notEqualValue
+    def get__EqualValue(self):
+        return self.__EqualValue
+
 
     def greater_than_limit(self, compare):
         """
@@ -50,8 +65,8 @@ class Logic:
         Compare : int, long, float
             The value that the input value in the "greater_than" function will be compared to.
         """
-
         self.__compareValueGreater = compare    # set value compare for "InputValue" > compare
+        return self.__compareValueGreater       # return for unit test 
 
     def less_than_limit(self, compare):
         """
@@ -62,8 +77,8 @@ class Logic:
         Compare : int, long, float
             The value that the input value in the "less_than" function will be compared to.
         """
-
         self.__compareValueLess = compare       # set value compare for "InputValue" < compare
+        return self.__compareValueLess
     
     def in_range_limits(self, less, greater):
         """
@@ -80,8 +95,11 @@ class Logic:
         if (less < greater):
             self.__compareValueLess = less
             self.__compareValueGreater = greater
+            return greater, less
         else:
             raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
+        #get functions for unit testing
+    
     
     def debugLimits(self):
         """
@@ -107,6 +125,7 @@ class Logic:
             stringFix = stringInput.replace(" ", "")
             stringSplit = stringFix.split(",")
             self.__set_values(stringSplit)
+            return 
         else:
             raise Exception("The custom logic is written incorrectly")
 
@@ -114,7 +133,11 @@ class Logic:
     def __check_string(self, inputV):
         allowed_characters = {"!", "=", "<", ">", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ","}
         testInput = set(inputV)
+        print("String allowed:", allowed_characters.issuperset(testInput))
         return allowed_characters.issuperset(testInput)
+
+    def get_check_string(self, input):
+        return self.__check_string(input)
 
     # takes the input string from set_custom_logic and turns it into values that can be saved in the class
     def __set_values(self, stringSplit):
@@ -122,15 +145,25 @@ class Logic:
             try:
                 if x[0] == '=':
                     self.__EqualValue.append(float(x[1:]))
+                    print("equal:", self.__EqualValue)
                 elif x[0] == '!' and x[1] == '=':
                     self.__notEqualValue.append(float(x[2:]))
+                    print("not equal:", self.__notEqualValue)
                 elif x[0] == '<':
                     self.__compareValueLess = float(x[1:])
+                    print("less:", self.__compareValueLess)
                 elif x[0] == '>':
                     self.__compareValueGreater = float(x[1:])
+                    print("greater:", self.__compareValueGreater)
             except:
                 raise Exception("Formatting of custom logic is incorrect")
-        return
+        return self.__EqualValue
+    
+
+    """def Limit_set_GT(self):
+        return True if self.__compareValueGreater != None else False
+    def Limit_set_LT(self):
+        return True if self.__compareValueLess != None else False"""
 
     def greater_than(self, inputV):
         """
@@ -168,11 +201,9 @@ class Logic:
         """
         if(self.__compareValueLess is not None and self.__compareValueGreater is not None):
             if(self.__compareValueLess < self.__compareValueGreater):
-                return True if self.__compareValueGreater is not None and self.__compareValueLess is not None and self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
+                return True if self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
             else:
                 raise Exception("The lower limit for \"in_range\" is larger or equal to the upper limit")
-        else:
-            raise Exception("Lower or upper bound not set")
 
     def custom_logic(self, inputV):
         """
@@ -190,3 +221,8 @@ class Logic:
             return True
         elif self.__compareValueGreater is not None and self.__compareValueLess is not None:
             return True if inputV > self.__compareValueGreater and inputV < self.__compareValueLess else False
+   
+    def set___compareValueGreater(self, greater):
+        self.__compareValueGreater = greater
+    def set___compareValueLess(self, less):
+        self.__compareValueLess = less
