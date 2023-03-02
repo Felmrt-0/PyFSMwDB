@@ -3,6 +3,9 @@ import time
 from influxdb import InfluxDBClient
 from columnar import columnar
 
+from finite_state_machine_lib.CustomExceptions import DatabaseTableEmpty
+
+
 class Database:
     """
     A database class that contains a database and payload
@@ -100,7 +103,8 @@ class Database:
 
     def create_database(self, host='localhost', port=8086, username='root', password='root', dbName="DefaultDatabase"):
         """
-        Creates a new InfluxDB database and sets it as client for the database object
+        Logs in as a client and creates a new InfluxDB database and sets it as client for the database object.
+        If a database is already open it's closed first.
 
         :param host:
         :param port: The network port that the database will use
@@ -108,10 +112,6 @@ class Database:
         :param password: The password of the user
         :param dbName: The name of the desired database
         :return: None
-        """
-        """
-        Creates a new database and sets it as the current one, stored as an instance variable. 
-        If a database is already open it's closed first. 
         """
         assert isinstance(host, str), "Input is not a String"
         assert isinstance(port, int), "The port number has to be an integer"
@@ -198,10 +198,13 @@ class Database:
         :return:
         """
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
-        res = res.raw["series"][0]
-        data = res["values"][::-1]
-        headers = res["columns"]
-        return headers, data
+        try:
+            res = res.raw["series"][0]
+            data = res["values"][::-1]
+            headers = res["columns"]
+            return headers, data
+        except IndexError:
+            raise DatabaseTableEmpty()
 
     def get_first_rows(self, table : str, number_of_rows=1):
         """
@@ -211,10 +214,13 @@ class Database:
         :return:
         """
         res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
-        res = res.raw["series"][0]
-        data = res["values"][::-1]
-        headers = res["columns"]
-        return headers, data
+        try:
+            res = res.raw["series"][0]
+            data = res["values"][::-1]
+            headers = res["columns"]
+            return headers, data
+        except IndexError:
+            raise DatabaseTableEmpty()
 
     def get_everything(self, table : str):
         """
@@ -224,10 +230,13 @@ class Database:
         :return:
         """
         res = self.__client.query("SELECT * FROM " + table + ";")
-        res = res.raw['series'][0]
-        headers = res["columns"]
-        data = res["values"]
-        return headers, data
+        try:
+            res = res.raw['series'][0]
+            headers = res["columns"]
+            data = res["values"]
+            return headers, data
+        except IndexError:
+            raise DatabaseTableEmpty()
 
     @staticmethod
     def print_formatter(headers, data):
@@ -360,11 +369,20 @@ def payload_test():
     print(db.print_everything(table))
     del db
 
+def exception_test():
+    db = Database()
+    db.create_database()
+    table = "BabyDriverTest"
+    rows = db.get_latest_rows(table, 1)
+    print(rows)
+
+
 # for testing:
 if __name__ == "__main__":
     import datetime
 
-    payload_test()
+    exception_test()
+
 
     """col1 = 1
     col2 = 2
@@ -391,6 +409,5 @@ if __name__ == "__main__":
     #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
     print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
     """
-    # PAYLOAD RELATED THINGS ARE UNTESTED
 
 
