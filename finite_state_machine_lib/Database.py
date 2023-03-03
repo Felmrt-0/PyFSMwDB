@@ -183,9 +183,7 @@ class Database:
         time = []
         for i in res.raw["series"][0]["values"]:
             time.append(i[time_pos])
-        #time = res.raw["series"][0]["values"][0][time_pos]
         print("time", time)
-        #self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + time + "';")
         for t in time:
             self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + t + "';")
 
