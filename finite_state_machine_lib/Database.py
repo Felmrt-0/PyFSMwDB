@@ -13,42 +13,42 @@ class Database:
     Attributes
     ----------
     client : database
-        function that runs when this state runs
+        The Database client the object is using
 
     payload : dict
-        payload to add to database
+        Payload to add to database
 
     columns : int
-        number of columns the table in database has??
+        Number of columns the table in database has??
 
     Methods
     -------
-    set_database(name, password, dbname)
+    set_database(self, name:str, password:str, dbName:str)
         Connects to a database
 
-    create_database()
-        creates a Influx 2.0 database
+    create_database(self, name:str, password:str, dbName:str)
+        Creates a Influx 2.0 database
 
     close_database()
-        closes database
+        Closes database
 
     insert(data)
-        inserts data into database
+        Inserts data into database
 
     update(values:list)
-        updates a table
+        Updates a table
 
     delete(table, col, value)
-        removes value from a specific column of table
+        Removes value from a specific column of table
 
     get_latest_rows(table, rows)
-        fetches the latest number of rows  of table
+        Fetches the latest number of rows  of table
 
     get_first_rows(table, rows)
-        fetches the first number of rows of table
+        Fetches the first number of rows of table
 
     get_everything(table)
-        fetches entire Table
+        Fetches entire Table
 
     print_formatter()
 
@@ -62,16 +62,16 @@ class Database:
         Prints entire table into terminal
 
     custom_query(query : str)
-
+        Querys database with custom command
 
     set_payload(table, columns, tags:dict=None)
-
+        Sets the payload structure
 
     payload_set_tags(tags: dict)
-
+        Sets payload tag
 
     payload_add_tags(tags: dict)
-
+        Adds a tag to the payload
 
 
     """
@@ -89,10 +89,6 @@ class Database:
         :param password: The password of the user
         :param dbName: The name of the desired database
         :return: None
-        """
-        """
-        Sets the desired database as the current one, stored as an instance variable. 
-        If a database is already open it's closed first. 
         """
         assert isinstance(name, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
         if self.__client is not None:
@@ -113,6 +109,7 @@ class Database:
         :param dbName: The name of the desired database
         :return: None
         """
+
         assert isinstance(host, str), "Input is not a String"
         assert isinstance(port, int), "The port number has to be an integer"
         assert isinstance(username, str) and isinstance(password, str) and isinstance(dbName, str), "Input is not a String"
@@ -291,7 +288,7 @@ class Database:
 
     def custom_query(self, query : str):
         """
-
+        Querys the database with the given command
         :param query:
         :return:
         """
@@ -334,6 +331,21 @@ class Database:
         """
         self.__payload["tags"] = tags
 
+    def getClient(self):
+        """
+        gets objects client
+
+        :return self.__client:
+        """
+        return self.__client
+
+    def getPayload(self):
+        """
+        gets objects Payload
+
+        :return self.__payload:
+        """
+        return
     def payload_add_tags(self, tags: dict):
         """
         adds a payload tag
@@ -409,5 +421,6 @@ if __name__ == "__main__":
     #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
     print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
     """
+    # PAYLOAD RELATED THINGS ARE UNTESTED
 
 
