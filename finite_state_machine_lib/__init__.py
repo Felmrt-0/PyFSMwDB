@@ -1,2 +1,2 @@
+# files in __all__ will be included when '*' is imported
 __all__ = ['FSM', 'State', 'Logic', 'Database', 'CustomExceptions']
-#customexceptions might bet wrong since there are several classes in the file

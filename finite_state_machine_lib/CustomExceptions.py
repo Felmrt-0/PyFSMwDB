@@ -6,8 +6,9 @@ class TransitionNotFoundException(Exception):
     def __init__(self, condition, connections, message="Couldn't find condition in connections"):
         self.condition = condition
         self.connections = connections
-        self.message = message
+        self.message = message + "\nCondition: " + str(self.condition) + "\nConnections" + str(self.connections)
         super().__init__(self.message)
+
 
 class LogicException(Exception):
     """
@@ -17,11 +18,21 @@ class LogicException(Exception):
         self.message = message
         super().__init__(self.message)
 
+
 class CustomLogicException(Exception):
     """
     Thrown if an exception relating to custom logic occurs
     """
     def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+
+class DatabaseTableEmpty(Exception):
+    """
+    Thrown if database query returned nothing
+    """
+    def __init__(self, message="The query returned nothing"):
         self.message = message
         super().__init__(self.message)
 

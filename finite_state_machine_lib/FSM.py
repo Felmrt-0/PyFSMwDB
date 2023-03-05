@@ -100,15 +100,15 @@ class FSM:
         if self.__currentState is None:
             self.__currentState = state
 
-    def add_states(self, state:list[State]):
+    def add_states(self, states: list[State]):
         """
         Iterates through the input to add all states into the state list
-        :param state: a list of states
+        :param states: a list of states
         :return: None
         """
-        assert isinstance(state, list), "The input should be a list"
-        for s in state:
-            self.add_state(s)
+        assert isinstance(states, list), "The input should be a list"
+        for state in states:
+            self.add_state(state)
 
     def set_current_state(self, state: State):
         """
