@@ -75,10 +75,8 @@ class Logic:
         """
         This function sets the upper limit for the greater than function
 
-        Parameters
-        ----------
-        Compare : int, long, float
-            The value that the input value in the "greater_than" function will be compared to.
+        :param Compare: The value that the input value in the "greater_than" function will be compared to.
+        :return: self.__compareValueGreater
         """
         self.__compareValueGreater = compare    # set value compare for "InputValue" > compare
         return self.__compareValueGreater       # return for unit test 
@@ -86,11 +84,9 @@ class Logic:
     def less_than_limit(self, compare):
         """
         This function sets the lower limit for the lower than function
-        
-        Parameters
-        ----------
-        Compare : int, long, float
-            The value that the input value in the "less_than" function will be compared to.
+
+        :param compare: The value that the input value in the "less_than" function will be compared to.
+        :return: self.__compareValueLess
         """
         self.__compareValueLess = compare       # set value compare for "InputValue" < compare
         return self.__compareValueLess
@@ -98,14 +94,11 @@ class Logic:
     def in_range_limits(self, less, greater):
         """
         This function sets the lower and upper limit for a in range function 
-        
-        Parameters
-        ----------
-        less : int, long, float
-            The lower value in the in range operation.
 
-        greater: int, long, float
-            The greater value in the in range operation.
+        :param less: The lower value in the in range operation.
+        :param greater: The greater value in the in range operation.
+        :raise LogicException: The lower limit for in_range is larger or equal to the upper limit
+        :return: greater, less
         """
         if (less < greater):
             self.__compareValueLess = less
@@ -119,22 +112,18 @@ class Logic:
     def debugLimits(self):
         """
         This functions returns a string with all values saved in the class
+
+        :return:  String with all values saved in the class
         """
         return "The current limits: Greater than = ", self.__compareValueGreater, ", Less than = ", self.__compareValueLess
     
     def set_custom_logic(self, stringInput):
         """
         This function allows users to set their own logic
-        
-        Parameters
-        ----------
-        stringInput : str
-            The string that will contain the "custom logic".
 
-        Raises
-        ------
-        Exception
-            If the stringInput contains characters that are not: "!", "=", "<", ">", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ","
+        :param stringInput: The string that will contain the "custom logic"
+        :raise CustomLogicException: The custom logic is written incorrectly, the stringInput contains characters that are not: "!", "=", "<", ">", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ","
+        :return: None
         """
         if self.__check_string(stringInput):
             stringFix = stringInput.replace(" ", "")
@@ -146,16 +135,34 @@ class Logic:
 
     # makes sure that the input string in set_custom_logic only contains characters that are allowed
     def __check_string(self, inputV):
+        """
+
+        :param inputV:
+        :return:
+        """
         allowed_characters = {"!", "=", "<", ">", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ","}
         testInput = set(inputV)
         print("String allowed:", allowed_characters.issuperset(testInput))
         return allowed_characters.issuperset(testInput)
 
     def get_check_string(self, input):
+        """
+
+
+        :param input:
+        :return: self.__check_string(input)
+        """
         return self.__check_string(input)
 
     # takes the input string from set_custom_logic and turns it into values that can be saved in the class
     def __set_values(self, stringSplit):
+        """
+
+
+        :param stringSplit:
+        :raise CustomLogicException: Formatting of custom logic is incorrect
+        :return: self.__EqualValue
+        """
         for x in stringSplit:
             try:
                 if x[0] == '=':
@@ -185,36 +192,28 @@ class Logic:
     def greater_than(self, inputV):
         """
         This function returns True if the greater than limit is less than the input value. The less than limit can NOT be set when using this function.
-        
-        Parameters
-        ----------
-        inputV : int, long, float
-            The value that will be compared to the value set during the set_greater_than operation
 
+        :param inputV: The value that will be compared to the value set during the set_greater_than operation
+        :return: True if self.__compareValueGreater is not None and self.__compareValueLess is None and self.__compareValueGreater < inputV else False
         """
         return True if self.__compareValueGreater is not None and self.__compareValueLess is None and self.__compareValueGreater < inputV else False
 
     def less_than(self, inputV):
         """
         This function returns True if the less than limit is more than the input value. The more than limit can NOT be set when using this function.
-        
-        Parameters
-        ----------
-        inputV : int, long, float
-            The value that will be compared to the value set during the set_less_than operation
 
+        :param inputV: The value that will be compared to the value set during the set_less_than operation
+        :return: True if self.__compareValueLess is not None and self.__compareValueGreater is None and self.__compareValueLess > inputV else False
         """
         return True if self.__compareValueLess is not None and self.__compareValueGreater is None and self.__compareValueLess > inputV else False
     
     def in_range(self, inputV):
         """
         This function returns True if the input value is between the upper and lower bound.
-        
-        Parameters
-        ----------
-        inputV : int, long, float
-            The value that will be compared to the values set during the set_in_range operation
 
+        :param inputV: The value that will be compared to the values set during the set_in_range operation
+        :raise LogicException: The lower limit for in_range is larger or equal to the upper limit
+        :return: True if self.__compareValueGreater >= inputV and self.__compareValueLess <= inputV else False
         """
         if(self.__compareValueLess is not None and self.__compareValueGreater is not None):
             if(self.__compareValueLess < self.__compareValueGreater):
@@ -225,12 +224,9 @@ class Logic:
     def custom_logic(self, inputV):
         """
         Return True if the input value fulfills the logic set by the user.
-        
-        Parameters
-        ----------
-        inputV : int, long, float
-            The value that will be compared to the condiations set in set_custom_logic
 
+        :param inputV: The value that will be compared to the condiations set in set_custom_logic
+        :return: False if inputV in self.__notEqualValue, True if inputV in self.__EqualValue and True if self.__compareValueGreater < inputV < self.__compareValueLess else False
         """
         if inputV in self.__notEqualValue:
             return False
@@ -240,6 +236,16 @@ class Logic:
             return True if self.__compareValueGreater < inputV < self.__compareValueLess else False
    
     def set___compareValueGreater(self, greater):
+        """
+        Sets value for self.__compareValueGreater
+
+        :param greater: int, float, double
+        """
         self.__compareValueGreater = greater
     def set___compareValueLess(self, less):
+        """
+        Sets value for self.__compareValueLess
+
+        :param less: int, float, double
+        """
         self.__compareValueLess = less

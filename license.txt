@@ -1,7 +1,7 @@
 The MIT Open Source License (MIT)
 
 Copyright (c) 2023 Andreas Söderman <m.andreas.soderman@gmail.com>
-Copyright (c) 2023 Arian Asghari <>
+Copyright (c) 2023 Arian Asghari <arianasghari123@gmail.com>
 Copyright (c) 2023 Felix Mårtensson <felix.martensson@telia.com>
 Copyright (c) 2023 Mattias Öz <mattiasjosefoz@gmail.com>
 

@@ -61,6 +61,7 @@ class State:
     def __init__(self, function, static_parameter=None, name=None, ending:bool = False):
         """
         A function must be specified when creating a state, this function will be run when the state is.
+
         :param function: this is the function the state is will run when called
         :param static_parameter: if set, this argument will always be given to the function
         :param name: the name of the state, used for debugging
@@ -76,6 +77,7 @@ class State:
     def add_transition(self, condition, target: State.State):
         """
         Adds a transition to the state. If the condition is met the target will be run next.
+
         :param condition: the condition for the transition
         :param target: the target for the transition
         :return: None
@@ -85,6 +87,7 @@ class State:
     def set_parameter(self, parameter):
         """
         Sets the constant parameter for the state
+
         :param parameter: the parameter
         :return: None
         """
@@ -93,6 +96,7 @@ class State:
     def get_parameter(self):
         """
         Returns the constant parameter
+
         :return: the constant parameter
         """
         return self.__static_parameter
@@ -100,8 +104,8 @@ class State:
     def set_name(self, name):
         """
         Sets the name of the state
+
         :param name: the new name
-        :return: None
         """
         assert isinstance(name, str), "Name should be a string"
         self.__name = name
@@ -109,6 +113,7 @@ class State:
     def get_name(self):
         """
         Gets the name of the state
+
         :return: the name of the state
         """
         return self.__name
@@ -116,7 +121,9 @@ class State:
     def get_transition(self, condition) -> State.State:
         """
         Returns the transition target given its chosen condition.
+
         :param condition: a condition belonging to the State
+        :raise TransitionNotFoundException: Can't find transition
         :return: the State the condition points to
         """
         try:
@@ -146,6 +153,7 @@ class State:
     def has_transition(self) -> bool:
         """
         Returns whether the state has a transition or not
+
         :return: False if the state has no transition. True otherwise
         """
         if len(self.__connections) > 0:
@@ -156,6 +164,7 @@ class State:
     def run_function(self, arg=None):
         """
         Runs the function saved to the state
+
         :param arg: the input argument to the function
         :return: whatever the function returns
         """
@@ -174,6 +183,7 @@ class State:
     def is_ending(self):
         """
         Returns whether the state is an ending or not.
+
         :return: True if the state is an ending. False otherwise
         """
         return self.__ending
@@ -181,12 +191,14 @@ class State:
     def get_function(self):
         """
         Fetches the function inside the State
+
         :return: the function
         """
         return self.__function
     def get_connections(self):
         """
         Returns the connections dictionary
+
         :return: the connections dictionary
         """
         return self.__connections

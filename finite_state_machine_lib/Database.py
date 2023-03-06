@@ -27,7 +27,7 @@ class Database:
         Connects to a database
 
     create_database(self, name:str, password:str, dbName:str)
-        Creates a Influx 2.0 database
+        Creates an Influx 2.0 database
 
     close_database()
         Closes database
@@ -238,6 +238,7 @@ class Database:
     @staticmethod
     def print_formatter(headers, data):
         """
+        Formats the output in terminal
 
         :param headers:
         :param data:
@@ -256,7 +257,7 @@ class Database:
 
     def print_latest_rows(self, table : str, number_of_rows=1):
         """
-        prints latest number of rows of table into the terminal
+        prints the latest number of rows of table into the terminal
 
         :param table:
         :param number_of_rows:
@@ -289,6 +290,7 @@ class Database:
     def custom_query(self, query : str):
         """
         Querys the database with the given command
+
         :param query:
         :return:
         """

@@ -80,6 +80,7 @@ class FSM:
     def deadend_check(self) -> bool:
         """
         Checks the states for dead-ends.
+
         :return: True if a dead-end is detected, False otherwise
         """
         for s in self.__states:
@@ -90,6 +91,7 @@ class FSM:
     def add_state(self, state: State):
         """
         Adds a state to the FSM's state list
+
         :param state: this state will be added to a list of states
         :return: None
         """
@@ -103,6 +105,7 @@ class FSM:
     def add_states(self, states: list[State]):
         """
         Iterates through the input to add all states into the state list
+
         :param states: a list of states
         :return: None
         """
@@ -114,6 +117,7 @@ class FSM:
         """
         Sets the input state as the starting point.
         By default, the first state added to the list will be the starting point.
+
         :param state: the fsm will start from this state
         :return: None
         """
@@ -124,6 +128,7 @@ class FSM:
         """
         Updates current state to the next one based one the given condition.
         Sets flag if the new state is and endpoint.
+
         :param condition: condition to switch state
         :return: None
         """
@@ -135,6 +140,7 @@ class FSM:
     def set_database(self, name, password, dbName):
         """
         Sets the current database based on the arguments given.
+
         :param name: the name of the user
         :param password: the password of the user
         :param dbName: the name of the database
@@ -145,6 +151,7 @@ class FSM:
     def create_database(self):
         """
         Creates a Database object and runs its create_database() function.
+
         :return: None
         """
         self.__database = Database()
@@ -153,6 +160,7 @@ class FSM:
     def get_database(self) -> Database:
         """
         Returns the current database.
+
         :return: current database
         """
         return self.__database
