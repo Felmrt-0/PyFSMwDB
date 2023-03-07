@@ -1,5 +1,5 @@
 import time
-
+import datetime
 from influxdb import InfluxDBClient
 from columnar import columnar
 
@@ -164,7 +164,7 @@ class Database:
         Deletes the values from the seleted table where col == value.
 
         :param table: The table to delete from
-        :param col: The name of the columns
+        :param col: The name of the column
         :param value: The value the columns might contain
         :return: None
         """
@@ -345,9 +345,9 @@ class Database:
         """
         gets objects Payload
 
-        :return self.__payload:
+        :return: self.__payload
         """
-        return
+        return self.__payload
     def payload_add_tags(self, tags: dict):
         """
         adds a payload tag
@@ -368,20 +368,18 @@ class Database:
         if self.__client is not None:
             self.__client.close()
 
-
 # test function
 def payload_test():
     table = "PayloadTable"
     db = Database()
-    db.set_database("root", "root", "DefaultDatabase")
+    db.set_database("", "", "mydb")
     db.set_payload(table, ["Col1", "Col2"], tags={"Tag" : "TestTag4"})
     db.update(["Nr1", "Nr2"])
-    print(db.print_everything(table))
+    print(db.print_first_rows(table))
     time.sleep(5)
     db.payload_set_tags({"Tag2" : "TestTag4"})
     db.update(["nr1", "nr2"])
-    print(db.print_everything(table))
-    del db
+    print(db.print_latest_rows(table))
 
 def exception_test():
     db = Database()
@@ -393,9 +391,9 @@ def exception_test():
 
 # for testing:
 if __name__ == "__main__":
-    import datetime
 
-    exception_test()
+
+    payload_test()
 
 
     """col1 = 1
