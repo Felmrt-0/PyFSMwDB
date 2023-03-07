@@ -6,7 +6,7 @@ with open("requirements.txt") as req:
 setup(
     name='FSM',
     packages=find_packages(include=['finite_state_machine_lib']),
-    version='0.1.9',
+    version='0.1.11',
     description='My first Python library',
     author='Me',
     license='ME',

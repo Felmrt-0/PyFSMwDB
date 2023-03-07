@@ -127,6 +127,7 @@ class Database:
         :return: None
         """
         self.__client.close()
+        self.__client = None
 
     def insert(self, data):
         """
@@ -168,7 +169,8 @@ class Database:
         :param value: The value the columns might contain
         :return: None
         """
-        res = self.__client.query("SELECT " + str(col) + " FROM " + str(table) + " WHERE " + str(col) + "='" + str(value) + "';")
+        inp = 'SELECT "' + str(col) + '" FROM "' + str(table) + '" WHERE "' + str(col) + '"="' + str(value) + '";'
+        res = self.__client.query(inp)
         if len(res.raw["series"]) == 0:
             return
         columns = res.raw["series"][0]["columns"]
@@ -182,7 +184,7 @@ class Database:
             time.append(i[time_pos])
         print("time", time)
         for t in time:
-            self.__client.query("DELETE FROM " + str(table) + " WHERE time ='" + t + "';")
+            self.__client.query('DELETE FROM ' + str(table) + ' WHERE time ="' + t + '";')
 
     def get_latest_rows(self, table : str, number_of_rows=1):
         """
@@ -192,7 +194,7 @@ class Database:
         :param number_of_rows:
         :return:
         """
-        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = self.__client.query('SELECT * FROM "' + table + '" ORDER BY DESC LIMIT ' + str(number_of_rows) + ';')
         try:
             res = res.raw["series"][0]
             data = res["values"][::-1]
@@ -208,7 +210,7 @@ class Database:
         :param number_of_rows:
         :return:
         """
-        res = self.__client.query("SELECT * FROM " + table + " ORDER BY DESC LIMIT " + str(number_of_rows) + ";")
+        res = self.__client.query('SELECT * FROM "' + table + '" ORDER BY DESC LIMIT ' + str(number_of_rows) + ';')
         try:
             res = res.raw["series"][0]
             data = res["values"][::-1]
@@ -224,7 +226,7 @@ class Database:
         :param table:
         :return:
         """
-        res = self.__client.query("SELECT * FROM " + table + ";")
+        res = self.__client.query('SELECT * FROM "' + table + '";')
         try:
             res = res.raw['series'][0]
             headers = res["columns"]
@@ -365,6 +367,7 @@ class Database:
         """
         if self.__client is not None:
             self.__client.close()
+            self.__client = None
 
 # test function
 def payload_test():

@@ -113,17 +113,17 @@ def database_test1():
 
 
 
-    #try:
-    database.delete(table, tag, 'yes')
-    delete_test = True
-    #except Exception:
-    #    print("delete_Test Failed")
-    #    delete_test = False
+    try:
+        database.delete(table, tag, 'yes')
+        delete_test = True
+    except Exception:
+        print("delete_Test Failed")
+        delete_test = False
 
     database.insert(data)
 
     try:
-        last_row = database.print_latest_rows(table)
+        last_row = database.get_latest_rows(table)
         if last_row[0] == ['time', 'is cool', 'tag'] and last_row[1][0][1] == 'yes' and last_row[1][0][2] == 'cool test':
             get_latest_rows_test = True
         else:
