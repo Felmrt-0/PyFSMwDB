@@ -28,7 +28,7 @@ class CustomLogicException(Exception):
         super().__init__(self.message)
 
 
-class DatabaseTableEmpty(Exception):
+class DatabaseTableEmptyException(Exception):
     """
     Thrown if database query returned nothing
     """
