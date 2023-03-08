@@ -1,4 +1,4 @@
-from Logic import *
+from finite_state_machine_lib.Logic import Logic
 
 #diffrent types of compair varibles
 long_compair = 5.12344
@@ -82,27 +82,28 @@ def custom_logic_unit_test(custom_logic,input):
 #def __set_values_unit_test(input):
 
 
-#greater_than_limit_unit_test(15)
-#greater_than_limit_unit_test(long_compair) # works for both float and int
-#less_than_limit_unit_test(15)
-#less_than_limit_unit_test(long_compair)
+if __name__ == "__main__":
+    greater_than_limit_unit_test(15)
+    greater_than_limit_unit_test(long_compair) # works for both float and int
+    less_than_limit_unit_test(15)
+    less_than_limit_unit_test(long_compair)
 
 
-#in_range_limits_unit_test(11,12) # testing both the error and also the correkt way to pass in the input
-#in_range_limits_unit_test(15,11)
-#check_string_unit_test("<", "my name is jeff")
-#set_values_unit_test("<2", ">0") #only works with <number  >number =number !=number 
+    in_range_limits_unit_test(11,12) # testing both the error and also the correkt way to pass in the input
+    in_range_limits_unit_test(15,11)
+    check_string_unit_test("<", "my name is jeff")
+    #set_values_unit_test("<2", ">0") #only works with <number  >number =number !=number
 
-#check_string_unit_test("<2", "BOI0")
-#print("-------------------")
-#check_string_unit_test("<2", "!!!0")   #one problem is when you give in right input types but in weird formation
+    check_string_unit_test("<2", "BOI0")
+    print("-------------------")
+    check_string_unit_test("<2", "!!!0")   #one problem is when you give in right input types but in weird formation
 
-#set_custom_logic_unit_test()  
+    #set_custom_logic_unit_test()
 
-#in_range_unit_test("5", "1", "10") #works with string
-#in_range_unit_test(5, 1, 10)    
-#in_range_unit_test(5, 2, 1)
+    in_range_unit_test("5", "1", "10") #works with string
+    in_range_unit_test(5, 1, 10)
+    in_range_unit_test(5, 2, 1)
 
 
-#custom_logic_unit_test("= 52, = 76, < 11, > 3, != 9, != 5",7) # works fine
-#custom_logic_unit_test("= 52, = 76, < 11, > 3, !!!!= 9, != 5",9)   #ignores the !!!!= 9
+    custom_logic_unit_test("= 52, = 76, < 11, > 3, != 9, != 5",7) # works fine
+    custom_logic_unit_test("= 52, = 76, < 11, > 3, !!!!= 9, != 5",9)   #ignores the !!!!= 9
