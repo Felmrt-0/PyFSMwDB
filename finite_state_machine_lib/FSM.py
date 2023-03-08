@@ -102,14 +102,13 @@ class FSM:
         if self.__currentState is None:
             self.__currentState = state
 
-    def add_states(self, states: list[State]):
+    def add_states(self, states: list):
         """
         Iterates through the input to add all states into the state list
 
         :param states: a list of states
         :return: None
         """
-        assert isinstance(states, list), "The input should be a list"
         for state in states:
             self.add_state(state)
 
@@ -164,6 +163,15 @@ class FSM:
         :return: current database
         """
         return self.__database
+
+    def get_states(self):
+        return self.__states
+
+    def get_current(self):
+        return self.__currentState
+
+    def is_Done(self):
+        return self.__done
 
 
 def func1():
