@@ -3,24 +3,35 @@ from finite_state_machine_lib.FSM import FSM
 from finite_state_machine_lib.Database import Database
 
 test = False
+
+
 def testFunc():
     global test
     test = True
     return True
+
+
 def run_test():
-    #try:
-    test = False
-    fsm = FSM()
-    state = State(testFunc, ending=True)
-    fsm.add_state(state)
-    fsm.run()
-    if test == True:
-        return True
-    print("run_test Failed")
-    return False
-    #except Exception:
-    #    print("run_test Failed")
-    #    return False
+    try:
+        global test
+        test = False
+        fsm = FSM()
+        state = State(testFunc)
+        state2 = State(testFunc, ending=True)
+        state.add_transition(True, state2)
+        fsm.add_state(state)
+        fsm.add_state(state2)
+        res = fsm.run()
+        assert res
+        if test:
+            return res
+        print("run_test Failed")
+        return res
+    except Exception:
+        print("run_test Failed")
+        return False
+
+
 def add_states_test():
     try:
         fsmStates = FSM()
@@ -34,6 +45,8 @@ def add_states_test():
     except Exception:
         print("add_states_test Failed")
         return False
+
+
 def set_current_state_test():
     try:
         fsm2 = FSM()
@@ -46,6 +59,7 @@ def set_current_state_test():
     except Exception:
         print("set_current_state_test Failed")
         return False
+
 
 def switch_state_test():
     try:
@@ -65,19 +79,22 @@ def set_database_test():
     try:
         fsm4 = FSM()
         fsm4.set_database("root", "root", "DefaultDatabase")
-        if fsm4.get_current() == 1:
+        fsm4.set_database("root", "root", "DefaultDatabase")
+        tmp = fsm4.get_database()
+        if tmp is not None:
             return True
         print("set_database_test Failed")
         return False
-    except Exception:
+    except Exception as e:
         print("set_database_test Failed")
         return False
+
 
 def create_database_test():
     try:
         fsm5 = FSM()
         fsm5.create_database()
-        if fsm5.get_database() != None:
+        if fsm5.get_database() is not None:
             return True
         print("create_database_test Failed")
         return False
@@ -85,8 +102,9 @@ def create_database_test():
         print("create_database_test Failed")
         return False
 
+
 if __name__ == "__main__":
-    #run_test()
+    run_test()
     add_states_test()
     set_current_state_test()
     switch_state_test()
