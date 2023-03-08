@@ -3,7 +3,7 @@ import datetime
 from influxdb import InfluxDBClient
 from columnar import columnar
 
-from finite_state_machine_lib.CustomExceptions import DatabaseTableEmpty
+from finite_state_machine_lib.CustomExceptions import DatabaseTableEmptyException
 
 
 class Database:
@@ -201,7 +201,7 @@ class Database:
             headers = res["columns"]
             return headers, data
         except IndexError:
-            raise DatabaseTableEmpty()
+            raise DatabaseTableEmptyException()
 
     def get_first_rows(self, table : str, number_of_rows=1):
         """
@@ -217,7 +217,7 @@ class Database:
             headers = res["columns"]
             return headers, data
         except IndexError:
-            raise DatabaseTableEmpty()
+            raise DatabaseTableEmptyExceptiony()
 
     def get_everything(self, table : str):
         """
@@ -233,7 +233,7 @@ class Database:
             data = res["values"]
             return headers, data
         except IndexError:
-            raise DatabaseTableEmpty()
+            raise DatabaseTableEmptyException()
 
     @staticmethod
     def print_formatter(headers, data):
