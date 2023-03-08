@@ -145,7 +145,11 @@ class FSM:
         :param dbName: the name of the database
         :return: None
         """
-        self.__database = Database.set_database(name, password, dbName)
+        if self.__database is not None and isinstance(self.__database, Database):
+            self.__database.close_database()
+            del self.__database
+        self.__database = Database()
+        self.__database.set_database(name, password, dbName)
 
     def create_database(self):
         """
@@ -153,6 +157,9 @@ class FSM:
 
         :return: None
         """
+        if self.__database is not None and isinstance(self.__database, Database):
+            self.__database.close_database()
+            del self.__database
         self.__database = Database()
         self.__database.create_database()
 
