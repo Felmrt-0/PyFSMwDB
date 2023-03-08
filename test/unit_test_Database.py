@@ -1,17 +1,6 @@
 from finite_state_machine_lib.Database import Database
 import datetime
 
-def payload_set_tags_test():
-    if 1:
-        return True
-    print(" Failed")
-    return False
-def payload_add_tags_test():
-    if 1:
-        return True
-    print(" Failed")
-    return False
-
 def database_test2():
     table = "PayloadTable"
     db = Database()
@@ -149,6 +138,45 @@ def database_test1():
         print("get_everything_Test Failed")
         get_everything_test = False
 
+    try:
+        newtag = {
+            "test tag" : "this is a test tag"
+        }
+        database.payload_set_tags(newtag)
+        if database.getPayload()["tags"] == newtag:
+            payload_set_tags_test = True
+        else:
+            print("payload_set_tags_test Failed")
+            payload_set_tags_test = False
+    except Exception:
+        print("payload_set_tags_test Failed")
+        payload_set_tags_test = False
+
+
+    try:
+        newtag1 = {
+            "test tag": "taggers",
+            "super tag": "super"
+        }
+        database.payload_add_tags(newtag1)
+        if database.getPayload()["tags"] == newtag1:
+            payload_add_tags_test = True
+        else:
+            print("payload_set_tags_test Failed")
+            payload_add_tags_test = False
+    except Exception:
+        print("payload_set_tags_test Failed")
+        payload_add_tags_test = False
+
+    database.custom_query("DROP SERIES FROM /.*/")
+    try:
+        database.get_everything(table)
+        print("custom_query_test Failed")
+        custom_query_test = False
+    except Exception:
+        custom_query_test = True
+
+
     database.close_database()
     try:
         database.insert(data)
@@ -158,7 +186,7 @@ def database_test1():
         close_database_test = True
 
 
-    return custom_query_test, create_database_test, insert_test, get_first_rows_test, delete_test, get_latest_rows_test, get_everything_test, close_database_test, print_latest_rows_test, print_first_rows_test
+    return payload_add_tags_test, payload_set_tags_test ,custom_query_test, create_database_test, insert_test, get_first_rows_test, delete_test, get_latest_rows_test, get_everything_test, close_database_test, print_latest_rows_test, print_first_rows_test
 
 if __name__ == "__main__":
     test1 = database_test1()
