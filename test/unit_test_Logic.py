@@ -1,4 +1,4 @@
-from finite_state_machine_lib.Logic import Logic
+from PyFSMwDB.Logic import Logic
 
 #diffrent types of compair varibles
 long_compair = 5.12344

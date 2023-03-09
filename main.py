@@ -1,8 +1,8 @@
 import math
 
-from finite_state_machine_lib.FSM import FSM
-from finite_state_machine_lib.State import State
-from finite_state_machine_lib.Logic import Logic
+from PyFSMwDB.FSM import FSM
+from PyFSMwDB.State import State
+from PyFSMwDB.Logic import Logic
 import datetime
 import time
 from termcolor import colored   # do not add termcolor to project requirements

@@ -5,8 +5,8 @@ with open("requirements.txt") as req:
 
 setup(
     name='FSM',
-    packages=find_packages(include=['finite_state_machine_lib']),
-    version='0.1.11',
+    packages=find_packages(include=['PyFSMwDB']),
+    version='0.2.0',
     description='My first Python library',
     author='Me',
     license='ME',

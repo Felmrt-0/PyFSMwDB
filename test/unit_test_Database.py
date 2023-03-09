@@ -1,4 +1,4 @@
-from finite_state_machine_lib.Database import Database
+from PyFSMwDB.Database import Database
 import datetime
 
 def database_test2():

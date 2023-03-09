@@ -1,7 +1,7 @@
 import math
 from multiprocessing import Condition
 
-from finite_state_machine_lib.CustomExceptions import LogicException, CustomLogicException
+from PyFSMwDB.CustomExceptions import LogicException, CustomLogicException
 
 
 class Logic:

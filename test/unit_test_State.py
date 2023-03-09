@@ -1,4 +1,4 @@
-from finite_state_machine_lib.State import State
+from PyFSMwDB.State import State
 
 def printFunc():
     print("Print function")

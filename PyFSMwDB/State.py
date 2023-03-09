@@ -1,6 +1,6 @@
-from finite_state_machine_lib import State
-from finite_state_machine_lib.CustomExceptions import TransitionNotFoundException
-from finite_state_machine_lib.Logic import Logic
+from PyFSMwDB import State
+from PyFSMwDB.CustomExceptions import TransitionNotFoundException
+from PyFSMwDB.Logic import Logic
 
 class State:
     """
@@ -195,6 +195,7 @@ class State:
         :return: the function
         """
         return self.__function
+
     def get_connections(self):
         """
         Returns the connections dictionary

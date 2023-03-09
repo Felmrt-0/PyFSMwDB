@@ -1,6 +1,6 @@
-from finite_state_machine_lib.State import State
-from finite_state_machine_lib.FSM import FSM
-from finite_state_machine_lib.Database import Database
+from PyFSMwDB.State import State
+from PyFSMwDB.FSM import FSM
+from PyFSMwDB.Database import Database
 
 test = False
 

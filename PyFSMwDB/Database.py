@@ -3,7 +3,7 @@ import datetime
 from influxdb import InfluxDBClient
 from columnar import columnar
 
-from finite_state_machine_lib.CustomExceptions import DatabaseTableEmptyException
+from PyFSMwDB.CustomExceptions import DatabaseTableEmptyException
 
 
 class Database:
@@ -348,6 +348,7 @@ class Database:
         :return: self.__payload
         """
         return self.__payload
+
     def payload_add_tags(self, tags: dict):
         """
         adds a payload tag

@@ -1,6 +1,6 @@
-from finite_state_machine_lib.Database import Database
-from finite_state_machine_lib.State import State
-from finite_state_machine_lib.Logic import Logic
+from PyFSMwDB.Database import Database
+from PyFSMwDB.State import State
+from PyFSMwDB.Logic import Logic
 
 
 class FSM:
@@ -37,13 +37,14 @@ class FSM:
     get_database()
         return self.__database
      """
+
     def __init__(self):
         self.__states = []
         self.__currentState = None
         self.__done = False
         self.__database = None
 
-    def run(self, inp=None, deadend_check:bool=True):
+    def run(self, inp=None, deadend_check: bool = True):
         """
         It will run the function, save its return value as 'condition' and 'arguement' if any, otherwise just
         'condition'. Condition will decide what module is run next and any argument will be passed to it.
@@ -185,13 +186,16 @@ def func1():
     print("This is number one")
     return int(input("Nr: "))
 
+
 def func2():
     print("This is number two")
     return int(input("Nr: "))
 
+
 def func3():
     print("This is the third and final one")
     return "bzzt"
+
 
 def locked(database):
     assert isinstance(database, Database)
@@ -203,13 +207,14 @@ def locked(database):
         },
         "time": datetime.datetime.now(),
         "fields": {
-            "locked" : inp
+            "locked": inp
         }
     }
     database.insert([data])
     if inp != "push" and inp != "coin":
         return
     return inp, database
+
 
 def unlocked(database):
     assert isinstance(database, Database)
@@ -229,8 +234,10 @@ def unlocked(database):
         return
     return inp, database
 
+
 def endNode():
     print("Finished")
+
 
 def basicTest(fsm):
     state1 = State(func1)
@@ -239,6 +246,7 @@ def basicTest(fsm):
     fsm.add_states([state1, state2, state3])
     state1.add_transition(2, state2)
     state2.add_transition(3, state3)
+
 
 def stringTest(fsm):
     lockedState = State(locked)
@@ -253,6 +261,7 @@ def stringTest(fsm):
     fsm.add_states([lockedState, unlockedState])
     fsm.set_current_state(lockedState)
 
+
 def logicTest(fsm):
     state1 = State(func1)
     state2 = State(func2)
@@ -261,6 +270,7 @@ def logicTest(fsm):
     state1.add_transition(Logic(gt=1, lt=5), state2)
     state1.add_transition(Logic(default=True), state3)
     state2.add_transition(Logic(gt=3), state3)
+
 
 def nessledDatabaseTest(fsm):
     fsm.create_database()
@@ -275,13 +285,13 @@ def nessledDatabaseTest(fsm):
     fsm2.add_state(state1)
     fsm.run()
 
-def testFunction():
 
+def testFunction():
     print("This is a test function")
+
 
 if __name__ == "__main__":
     import datetime
+
     fsm = FSM()
     nessledDatabaseTest(fsm)
-
-
