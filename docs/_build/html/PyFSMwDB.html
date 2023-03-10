@@ -1,0 +1,1170 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>PyFSMwDB package &#8212; PyFSMwDB 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="PyFSMwDB" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pyfsmwdb-package">
+<h1>PyFSMwDB package<a class="headerlink" href="#pyfsmwdb-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-PyFSMwDB.CustomExceptions">
+<span id="pyfsmwdb-customexceptions-module"></span><h2>PyFSMwDB.CustomExceptions module<a class="headerlink" href="#module-PyFSMwDB.CustomExceptions" title="Permalink to this heading">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="PyFSMwDB.CustomExceptions.CustomLogicException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.CustomExceptions.</span></span><span class="sig-name descname"><span class="pre">CustomLogicException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.CustomExceptions.CustomLogicException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Thrown if an exception relating to custom logic occurs</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PyFSMwDB.CustomExceptions.DatabaseTableEmptyException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.CustomExceptions.</span></span><span class="sig-name descname"><span class="pre">DatabaseTableEmptyException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'The</span> <span class="pre">query</span> <span class="pre">returned</span> <span class="pre">nothing'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.CustomExceptions.DatabaseTableEmptyException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Thrown if database query returned nothing</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PyFSMwDB.CustomExceptions.LogicException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.CustomExceptions.</span></span><span class="sig-name descname"><span class="pre">LogicException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.CustomExceptions.LogicException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Thrown for general error in Logic</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PyFSMwDB.CustomExceptions.TransitionNotFoundException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.CustomExceptions.</span></span><span class="sig-name descname"><span class="pre">TransitionNotFoundException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connections</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Couldn't</span> <span class="pre">find</span> <span class="pre">condition</span> <span class="pre">in</span> <span class="pre">connections&quot;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.CustomExceptions.TransitionNotFoundException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Thrown when a State couldn’t find a transition with the input given</p>
+</dd></dl>
+
+</section>
+<section id="module-PyFSMwDB.Database">
+<span id="pyfsmwdb-database-module"></span><h2>PyFSMwDB.Database module<a class="headerlink" href="#module-PyFSMwDB.Database" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.Database.</span></span><span class="sig-name descname"><span class="pre">Database</span></span><a class="headerlink" href="#PyFSMwDB.Database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A database class that contains a database and payload</p>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>client<span class="classifier">database</span></dt><dd><p>The Database client the object is using</p>
+</dd>
+<dt>payload<span class="classifier">dict</span></dt><dd><p>Payload to add to database</p>
+</dd>
+<dt>columns<span class="classifier">int</span></dt><dd><p>Number of columns the table in database has??</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>set_database(self, name:str, password:str, dbName:str)</dt><dd><p>Connects to a database</p>
+</dd>
+<dt>create_database(self, name:str, password:str, dbName:str)</dt><dd><p>Creates an Influx 2.0 database</p>
+</dd>
+<dt>close_database()</dt><dd><p>Closes database</p>
+</dd>
+<dt>insert(data)</dt><dd><p>Inserts data into database</p>
+</dd>
+<dt>update(values:list)</dt><dd><p>Updates a table</p>
+</dd>
+<dt>delete(table, col, value)</dt><dd><p>Removes value from a specific column of table</p>
+</dd>
+<dt>get_latest_rows(table, rows)</dt><dd><p>Fetches the latest number of rows  of table</p>
+</dd>
+<dt>get_first_rows(table, rows)</dt><dd><p>Fetches the first number of rows of table</p>
+</dd>
+<dt>get_everything(table)</dt><dd><p>Fetches entire Table</p>
+</dd>
+<dt>print_formatter()</dt><dd><p>Formats the output in terminal</p>
+</dd>
+<dt>print_latest_rows(table<span class="classifier">str, rows)</span></dt><dd><p>Prints the latest number of rows  of table in the terminal</p>
+</dd>
+<dt>print_first_rows(table<span class="classifier">str, rows)</span></dt><dd><p>Prints the first number of rows  of table in the terminal</p>
+</dd>
+<dt>print_everything(table<span class="classifier">str)</span></dt><dd><p>Prints entire table into terminal</p>
+</dd>
+<dt>custom_query(query<span class="classifier">str)</span></dt><dd><p>Querys database with custom command</p>
+</dd>
+<dt>set_payload(table, columns, tags:dict=None)</dt><dd><p>Sets the payload structure</p>
+</dd>
+<dt>payload_set_tags(tags: dict)</dt><dd><p>Sets payload tag</p>
+</dd>
+<dt>payload_add_tags(tags: dict)</dt><dd><p>Adds a tag to the payload</p>
+</dd>
+<dt>getClient()</dt><dd><p>gets objects current client</p>
+</dd>
+<dt>getPayload()</dt><dd><p>gets objects Payload</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.close_database">
+<span class="sig-name descname"><span class="pre">close_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.close_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the open database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.create_database">
+<span class="sig-name descname"><span class="pre">create_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'localhost'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8086</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'root'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'root'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DefaultDatabase'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.create_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs in as a client and creates a new InfluxDB database and sets it as client for the database object.
+If a database is already open it’s closed first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> – </p></li>
+<li><p><strong>port</strong> – The network port that the database will use</p></li>
+<li><p><strong>username</strong> – The name of the user</p></li>
+<li><p><strong>password</strong> – The password of the user</p></li>
+<li><p><strong>dbName</strong> – The name of the desired database</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.custom_query">
+<span class="sig-name descname"><span class="pre">custom_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.custom_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database with the given command</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the values from the seleted table where col == value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – The table to delete from</p></li>
+<li><p><strong>col</strong> – The name of the column</p></li>
+<li><p><strong>value</strong> – The value the columns might contain</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.getClient">
+<span class="sig-name descname"><span class="pre">getClient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.getClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets objects client</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return self.__client<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.getPayload">
+<span class="sig-name descname"><span class="pre">getPayload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.getPayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets objects Payload</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__payload</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.get_everything">
+<span class="sig-name descname"><span class="pre">get_everything</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.get_everything" title="Permalink to this definition">¶</a></dt>
+<dd><p>fetches entire table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table</strong> – </p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.DatabaseTableEmptyException" title="PyFSMwDB.CustomExceptions.DatabaseTableEmptyException"><strong>DatabaseTableEmptyException</strong></a> – IndexError</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>headers, data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.get_first_rows">
+<span class="sig-name descname"><span class="pre">get_first_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.get_first_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets the first number of rows from table
+:param table:
+:param number_of_rows:
+:raise DatabaseTableEmptyException: IndexError
+:return: headers, data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.get_latest_rows">
+<span class="sig-name descname"><span class="pre">get_latest_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.get_latest_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets the last number of row from a table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – </p></li>
+<li><p><strong>number_of_rows</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.DatabaseTableEmptyException" title="PyFSMwDB.CustomExceptions.DatabaseTableEmptyException"><strong>DatabaseTableEmptyException</strong></a> – IndexError</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>headers, data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts a list or dictanary as data into the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – The data that will be inserted into the database</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.payload_add_tags">
+<span class="sig-name descname"><span class="pre">payload_add_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.payload_add_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a payload tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tags</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.payload_set_tags">
+<span class="sig-name descname"><span class="pre">payload_set_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.payload_set_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets payload tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tags</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.print_everything">
+<span class="sig-name descname"><span class="pre">print_everything</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.print_everything" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints entire table into terminal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.print_first_rows">
+<span class="sig-name descname"><span class="pre">print_first_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.print_first_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints first number of rows from table into the terminal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – </p></li>
+<li><p><strong>number_of_rows</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.print_formatter(headers, data)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.print_formatter">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_formatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.print_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats the output in terminal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>headers</strong> – </p></li>
+<li><p><strong>data</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>columnar(data=list_of_rows, headers=headers, justify=”c”, min_column_width=10)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.print_latest_rows">
+<span class="sig-name descname"><span class="pre">print_latest_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.print_latest_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints the latest number of rows of table into the terminal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – </p></li>
+<li><p><strong>number_of_rows</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.print_formatter(headers, data)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.set_database">
+<span class="sig-name descname"><span class="pre">set_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.set_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets an exsiting Influx 2.0 database to be utilized</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The name of the user</p></li>
+<li><p><strong>password</strong> – The password of the user</p></li>
+<li><p><strong>dbName</strong> – The name of the desired database</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.set_payload">
+<span class="sig-name descname"><span class="pre">set_payload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.set_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the payload structure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – </p></li>
+<li><p><strong>columns</strong> – </p></li>
+<li><p><strong>tags</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Database.Database.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Database.Database.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the table with new values depending on the instance variables: payload and columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – The value to be entered into the column.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-PyFSMwDB.FSM">
+<span id="pyfsmwdb-fsm-module"></span><h2>PyFSMwDB.FSM module<a class="headerlink" href="#module-PyFSMwDB.FSM" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.FSM.</span></span><span class="sig-name descname"><span class="pre">FSM</span></span><a class="headerlink" href="#PyFSMwDB.FSM.FSM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that is used to create a finite-state machine(FSM) that can store states with code within it</p>
+<section id="id1">
+<h3>Attributes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>states<span class="classifier">list</span></dt><dd><p>A list with all the states that exists in the FSM</p>
+</dd>
+<dt>currentState<span class="classifier">State</span></dt><dd><p>The current state the FSM is running or is using</p>
+</dd>
+<dt>done<span class="classifier">bool</span></dt><dd><p>A bool that determent if the FSM is done running</p>
+</dd>
+<dt>databaste<span class="classifier">Database</span></dt><dd><p>A influxdb 2.0 database where you can load and save data</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Methods<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>run( inp = None )</dt><dd><p>Runs the current state</p>
+</dd>
+<dt>add_state( State )</dt><dd><p>Adds a state to the FSM</p>
+</dd>
+<dt>add_states( State[] )</dt><dd><p>Adds a list of states to the FSM</p>
+</dd>
+<dt>set_current_state( State )</dt><dd><p>Sets the current state to State</p>
+</dd>
+<dt>switch_state( condition )</dt><dd><p>Switches the current state in the FSM</p>
+</dd>
+<dt>set_database( name, password, dbName)</dt><dd><p>sets the database to one that already exists</p>
+</dd>
+<dt>create_database()</dt><dd><p>Creates a new InfluxDB database</p>
+</dd>
+<dt>get_database()</dt><dd><p>Returns the current database</p>
+</dd>
+<dt>get_states()</dt><dd><p>Fetches the State List</p>
+</dd>
+<dt>get_current()</dt><dd><p>Returns the current State</p>
+</dd>
+<dt>is_Done()</dt><dd><p>Check if Done</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.add_state">
+<span class="sig-name descname"><span class="pre">add_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PyFSMwDB.State.State" title="PyFSMwDB.State.State"><span class="pre">State</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.add_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a state to the FSM’s state list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – this state will be added to a list of states</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.add_states">
+<span class="sig-name descname"><span class="pre">add_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.add_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through the input to add all states into the state list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>states</strong> – a list of states</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.create_database">
+<span class="sig-name descname"><span class="pre">create_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.create_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Database object and runs its create_database() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.deadend_check">
+<span class="sig-name descname"><span class="pre">deadend_check</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.deadend_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the states for dead-ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if a dead-end is detected, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.get_current">
+<span class="sig-name descname"><span class="pre">get_current</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.get_current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current State</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>current State</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.get_database">
+<span class="sig-name descname"><span class="pre">get_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyFSMwDB.Database.Database" title="PyFSMwDB.Database.Database"><span class="pre">Database</span></a></span></span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.get_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>current database</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.get_states">
+<span class="sig-name descname"><span class="pre">get_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.get_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the State List</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of states</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.is_Done">
+<span class="sig-name descname"><span class="pre">is_Done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.is_Done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if Done</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__done</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deadend_check</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>It will run the function, save its return value as ‘condition’ and ‘arguement’ if any, otherwise just
+‘condition’. Condition will decide what module is run next and any argument will be passed to it.
+deadend_check will be passed down to any sub FSMs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inp</strong> – input argument to be sent into the first function</p></li>
+<li><p><strong>deadend_check</strong> – whether a dead-end check will be run before execution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>whatever the last State returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.set_current_state">
+<span class="sig-name descname"><span class="pre">set_current_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PyFSMwDB.State.State" title="PyFSMwDB.State.State"><span class="pre">State</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.set_current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the input state as the starting point.
+By default, the first state added to the list will be the starting point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – the fsm will start from this state</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.FSM.FSM.set_database">
+<span class="sig-name descname"><span class="pre">set_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbName</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.FSM.FSM.set_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current database based on the arguments given.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the name of the user</p></li>
+<li><p><strong>password</strong> – the password of the user</p></li>
+<li><p><strong>dbName</strong> – the name of the database</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-PyFSMwDB.Logic">
+<span id="pyfsmwdb-logic-module"></span><h2>PyFSMwDB.Logic module<a class="headerlink" href="#module-PyFSMwDB.Logic" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.Logic.</span></span><span class="sig-name descname"><span class="pre">Logic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class used for creating logical expressions</p>
+<section id="id3">
+<h3>Attributes<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>customLogic<span class="classifier">bool</span></dt><dd><p>set to True when custom logic is used</p>
+</dd>
+<dt>compareValueGreater: int float douable</dt><dd><p>Greater value</p>
+</dd>
+<dt>compareValueLess<span class="classifier">int float double</span></dt><dd><p>Lesser value</p>
+</dd>
+<dt>notEqualValue<span class="classifier">list</span></dt><dd><p>not Equal</p>
+</dd>
+<dt>EqualValue<span class="classifier">list</span></dt><dd><p>Dictunary that connects states to each other</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Methods<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>greater_than_limit(compare)</dt><dd><p>Sets the value that the input value will be compared to in a “greater than” operation.</p>
+</dd>
+<dt>less_than_limit(compare)</dt><dd><p>Sets the value that the input value will be compared to in a “less than” operation.</p>
+</dd>
+<dt>in_range_limits(less, greater)</dt><dd><p>Sets the limits for the input value in a “in range” operation.</p>
+</dd>
+<dt>debugLimits()</dt><dd><p>Returns all values currently saved as comparison values as a string. Used for debugging.</p>
+</dd>
+<dt>set_custom_logic(stringInput)</dt><dd><p>Sets the logic for a “custom logic” operation.</p>
+</dd>
+<dt>greater_than(inputV)</dt><dd><p>Returns True if the input value is greater than the upper limit that has been set. A lower limit can NOT be set when using this function.</p>
+</dd>
+<dt>less_than(inputV)</dt><dd><p>Returns True if the input value is less than the lower limit that has been set. A upper limit can NOT be set when using this function.</p>
+</dd>
+<dt>in_range(inputV)</dt><dd><p>Returns True if the input value is within the limits that have been set.</p>
+</dd>
+<dt>custom_logic(inputV)</dt><dd><p>Returns True if the input value fulfills the logic that was set in “set_custom_logic”.</p>
+</dd>
+<dt>set___compareValueGreater()</dt><dd><p>Sets value for self.__compareValueGreater</p>
+</dd>
+<dt>set___compareValueGreater(greater)</dt><dd><p>Sets value for self.__compareValueGreater</p>
+</dd>
+<dt>set___compareValueLess(less)</dt><dd><p>Sets value for self.__compareValueLess</p>
+</dd>
+<dt>get_check_string(input)</dt><dd><p>Fetches check_string for input</p>
+</dd>
+<dt>get___compareValueGreater()</dt><dd><p>get___compareValueGreater</p>
+</dd>
+<dt>get__compareValueLess()</dt><dd><p>Fetches __compareValueLess</p>
+</dd>
+<dt>get__notEqualValue()</dt><dd><p>Fetches __notEqualValue</p>
+</dd>
+<dt>get__EqualValue()</dt><dd><p>Fetches __EqualValue</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.custom_logic">
+<span class="sig-name descname"><span class="pre">custom_logic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputV</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.custom_logic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the input value fulfills the logic set by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputV</strong> – The value that will be compared to the condiations set in set_custom_logic</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if inputV in self.__notEqualValue, True if inputV in self.__EqualValue and True if self.__compareValueGreater &lt; inputV &lt; self.__compareValueLess else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.debugLimits">
+<span class="sig-name descname"><span class="pre">debugLimits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.debugLimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions returns a string with all values saved in the class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String with all values saved in the class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.get__EqualValue">
+<span class="sig-name descname"><span class="pre">get__EqualValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.get__EqualValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches __EqualValue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__EqualValue</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.get___compareValueGreater">
+<span class="sig-name descname"><span class="pre">get___compareValueGreater</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.get___compareValueGreater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches __compareValueGreater</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__compareValueGreater</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.get__compareValueLess">
+<span class="sig-name descname"><span class="pre">get__compareValueLess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.get__compareValueLess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches __compareValueLess</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__compareValueLess</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.get__notEqualValue">
+<span class="sig-name descname"><span class="pre">get__notEqualValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.get__notEqualValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches __notEqualValue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self.__notEqualValue</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.get_check_string">
+<span class="sig-name descname"><span class="pre">get_check_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.get_check_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches check_string for input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.__check_string(input)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.greater_than">
+<span class="sig-name descname"><span class="pre">greater_than</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputV</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.greater_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns True if the greater than limit is less than the input value. The less than limit can NOT be set when using this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputV</strong> – The value that will be compared to the value set during the set_greater_than operation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if self.__compareValueGreater is not None and self.__compareValueLess is None and self.__compareValueGreater &lt; inputV else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.greater_than_limit">
+<span class="sig-name descname"><span class="pre">greater_than_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compare</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.greater_than_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the upper limit for the greater than function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Compare</strong> – The value that the input value in the “greater_than” function will be compared to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.__compareValueGreater</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.in_range">
+<span class="sig-name descname"><span class="pre">in_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputV</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.in_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns True if the input value is between the upper and lower bound.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputV</strong> – The value that will be compared to the values set during the set_in_range operation</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.LogicException" title="PyFSMwDB.CustomExceptions.LogicException"><strong>LogicException</strong></a> – The lower limit for in_range is larger or equal to the upper limit</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if self.__compareValueGreater &gt;= inputV and self.__compareValueLess &lt;= inputV else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.in_range_limits">
+<span class="sig-name descname"><span class="pre">in_range_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">less</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greater</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.in_range_limits" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the lower and upper limit for a in range function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>less</strong> – The lower value in the in range operation.</p></li>
+<li><p><strong>greater</strong> – The greater value in the in range operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.LogicException" title="PyFSMwDB.CustomExceptions.LogicException"><strong>LogicException</strong></a> – The lower limit for in_range is larger or equal to the upper limit</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>greater, less</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.less_than">
+<span class="sig-name descname"><span class="pre">less_than</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputV</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.less_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns True if the less than limit is more than the input value. The more than limit can NOT be set when using this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputV</strong> – The value that will be compared to the value set during the set_less_than operation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if self.__compareValueLess is not None and self.__compareValueGreater is None and self.__compareValueLess &gt; inputV else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.less_than_limit">
+<span class="sig-name descname"><span class="pre">less_than_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compare</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.less_than_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the lower limit for the lower than function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>compare</strong> – The value that the input value in the “less_than” function will be compared to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.__compareValueLess</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.set___compareValueGreater">
+<span class="sig-name descname"><span class="pre">set___compareValueGreater</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">greater</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.set___compareValueGreater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets value for self.__compareValueGreater</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>greater</strong> – int, float, double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.set___compareValueLess">
+<span class="sig-name descname"><span class="pre">set___compareValueLess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">less</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.set___compareValueLess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets value for self.__compareValueLess</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>less</strong> – int, float, double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.Logic.Logic.set_custom_logic">
+<span class="sig-name descname"><span class="pre">set_custom_logic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stringInput</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.Logic.Logic.set_custom_logic" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function allows users to set their own logic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stringInput</strong> – The string that will contain the “custom logic”</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.CustomLogicException" title="PyFSMwDB.CustomExceptions.CustomLogicException"><strong>CustomLogicException</strong></a> – The custom logic is written incorrectly, the stringInput contains characters that are not: “!”, “=”, “&lt;”, “&gt;”, “0”, “1”, “2”, “3”, “4”, “5”, “6”, “7”, “8”, “9”, “ “, “,”</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-PyFSMwDB.State">
+<span id="pyfsmwdb-state-module"></span><h2>PyFSMwDB.State module<a class="headerlink" href="#module-PyFSMwDB.State" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PyFSMwDB.State.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that creates State objects</p>
+<section id="id5">
+<h3>Attributes<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>function<span class="classifier">function</span></dt><dd><p>function that runs when this state runs</p>
+</dd>
+<dt>static_parameter:</dt><dd><p>Parameter that will be used when State runs</p>
+</dd>
+<dt>name<span class="classifier">Str</span></dt><dd><p>Names the state</p>
+</dd>
+<dt>ending<span class="classifier">bool</span></dt><dd><p>Defines if State object is an endstate</p>
+</dd>
+<dt>connections<span class="classifier">dict</span></dt><dd><p>Dictunary that connects states to each other</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Methods<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>add_transition(condition, target)</dt><dd><p>Adds a transition to the State object</p>
+</dd>
+<dt>set_parameter(parameter)</dt><dd><p>Sets the static_parameter attribute of the State object</p>
+</dd>
+<dt>get_parameter()</dt><dd><p>Fetches the static_parameter attribute from the State object</p>
+</dd>
+<dt>set_name(name)</dt><dd><p>Sets the name attribute of the State object</p>
+</dd>
+<dt>get_name()</dt><dd><p>Fetches the name attribute from State object</p>
+</dd>
+<dt>get_transition(condition)</dt><dd><p>Gets the transition target given its chosen condition</p>
+</dd>
+<dt>has_transition()</dt><dd><p>Checks if State object has a transition</p>
+</dd>
+<dt>run_function(arg=None)</dt><dd><p>Runs the function stored in State object</p>
+</dd>
+<dt>is_ending()</dt><dd><p>Checks if the State object is an endstate</p>
+</dd>
+<dt>get_function()</dt><dd><p>Fetches the stored function from State object</p>
+</dd>
+<dt>get_connections()</dt><dd><p>Fetches the dictionary of transitions from State object</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.add_transition">
+<span class="sig-name descname"><span class="pre">add_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target:</span> <span class="pre">&lt;module</span> <span class="pre">'PyFSMwDB.State'</span> <span class="pre">from</span> <span class="pre">'/home/gamla_bettan/Documents/D0020E-Projekt/PyFSMwDB/State.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.add_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a transition to the state. If the condition is met the target will be run next.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> – the condition for the transition</p></li>
+<li><p><strong>target</strong> – the target for the transition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.get_connections">
+<span class="sig-name descname"><span class="pre">get_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.get_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the connections dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the connections dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.get_function">
+<span class="sig-name descname"><span class="pre">get_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the function inside the State</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the name of the state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the name of the state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.get_parameter">
+<span class="sig-name descname"><span class="pre">get_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.get_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the constant parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the constant parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.get_transition">
+<span class="sig-name descname"><span class="pre">get_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">&lt;module</span> <span class="pre">'PyFSMwDB.State'</span> <span class="pre">from</span> <span class="pre">'/home/gamla_bettan/Documents/D0020E-Projekt/PyFSMwDB/State.py'&gt;</span></span></span><a class="headerlink" href="#PyFSMwDB.State.State.get_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the transition target given its chosen condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>condition</strong> – a condition belonging to the State</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#PyFSMwDB.CustomExceptions.TransitionNotFoundException" title="PyFSMwDB.CustomExceptions.TransitionNotFoundException"><strong>TransitionNotFoundException</strong></a> – Can’t find transition</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the State the condition points to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.has_transition">
+<span class="sig-name descname"><span class="pre">has_transition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#PyFSMwDB.State.State.has_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the state has a transition or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>False if the state has no transition. True otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.is_ending">
+<span class="sig-name descname"><span class="pre">is_ending</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.is_ending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the state is an ending or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the state is an ending. False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.run_function">
+<span class="sig-name descname"><span class="pre">run_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.run_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the function saved to the state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>arg</strong> – the input argument to the function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>whatever the function returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the name of the state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – the new name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyFSMwDB.State.State.set_parameter">
+<span class="sig-name descname"><span class="pre">set_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyFSMwDB.State.State.set_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the constant parameter for the state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameter</strong> – the parameter</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-PyFSMwDB">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-PyFSMwDB" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PyFSMwDB</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PyFSMwDB</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PyFSMwDB package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">PyFSMwDB</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">PyFSMwDB</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Andreas Söderman, Arian Asghari, Felix Mårtensson, Mattias Öz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/PyFSMwDB.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
