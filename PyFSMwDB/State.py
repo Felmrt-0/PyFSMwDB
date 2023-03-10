@@ -106,6 +106,7 @@ class State:
         Sets the name of the state
 
         :param name: the new name
+        :return: None
         """
         assert isinstance(name, str), "Name should be a string"
         self.__name = name

@@ -14,11 +14,13 @@ class Logic:
         set to True when custom logic is used
 
     compareValueGreater: int float douable
-
+        Greater value
 
     compareValueLess : int float double
+        Lesser value
 
     notEqualValue : list
+        not Equal
 
     EqualValue : list
         Dictunary that connects states to each other
@@ -51,6 +53,31 @@ class Logic:
 
     custom_logic(inputV)
         Returns True if the input value fulfills the logic that was set in "set_custom_logic".
+
+    set___compareValueGreater()
+        Sets value for self.__compareValueGreater
+
+    set___compareValueGreater(greater)
+        Sets value for self.__compareValueGreater
+
+    set___compareValueLess(less)
+        Sets value for self.__compareValueLess
+
+    get_check_string(input)
+        Fetches check_string for input
+
+    get___compareValueGreater()
+        get___compareValueGreater
+
+    get__compareValueLess()
+        Fetches __compareValueLess
+
+    get__notEqualValue()
+        Fetches __notEqualValue
+
+    get__EqualValue()
+        Fetches __EqualValue
+
     """
 
     #def __init__(self, logic=False):
@@ -60,15 +87,6 @@ class Logic:
        self.__compareValueLess = None
        self.__notEqualValue = []
        self.__EqualValue = []
-    
-    def get___compareValueGreater(self):
-        return self.__compareValueGreater
-    def get__compareValueLess(self):
-        return self.__compareValueLess
-    def get__notEqualValue(self):
-        return self.__notEqualValue
-    def get__EqualValue(self):
-        return self.__EqualValue
 
 
     def greater_than_limit(self, compare):
@@ -106,7 +124,6 @@ class Logic:
             return greater, less
         else:
             raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit")
-        #get functions for unit testing
     
     
     def debugLimits(self):
@@ -136,6 +153,7 @@ class Logic:
     # makes sure that the input string in set_custom_logic only contains characters that are allowed
     def __check_string(self, inputV):
         """
+        Checks if String is allowed
 
         :param inputV:
         :return:
@@ -145,14 +163,7 @@ class Logic:
         print("String allowed:", allowed_characters.issuperset(testInput))
         return allowed_characters.issuperset(testInput)
 
-    def get_check_string(self, input):
-        """
 
-
-        :param input:
-        :return: self.__check_string(input)
-        """
-        return self.__check_string(input)
 
     # takes the input string from set_custom_logic and turns it into values that can be saved in the class
     def __set_values(self, stringSplit):
@@ -181,13 +192,6 @@ class Logic:
                 raise CustomLogicException("Formatting of custom logic is incorrect")
         return self.__EqualValue
     
-
-    """
-    def Limit_set_GT(self):
-        return True if self.__compareValueGreater != None else False
-    def Limit_set_LT(self):
-        return True if self.__compareValueLess != None else False
-    """
 
     def greater_than(self, inputV):
         """
@@ -249,3 +253,44 @@ class Logic:
         :param less: int, float, double
         """
         self.__compareValueLess = less
+
+    def get_check_string(self, input):
+        """
+        Fetches check_string for input
+
+        :param input:
+        :return: self.__check_string(input)
+        """
+        return self.__check_string(input)
+
+    def get___compareValueGreater(self):
+        """
+        Fetches __compareValueGreater
+
+        :return: self.__compareValueGreater
+        """
+        return self.__compareValueGreater
+
+    def get__compareValueLess(self):
+        """
+        Fetches __compareValueLess
+
+        :return: self.__compareValueLess
+        """
+        return self.__compareValueLess
+
+    def get__notEqualValue(self):
+        """
+        Fetches __notEqualValue
+
+        :return: self.__notEqualValue
+        """
+        return self.__notEqualValue
+
+    def get__EqualValue(self):
+        """
+        Fetches __EqualValue
+
+        :return: self.__EqualValue
+        """
+        return self.__EqualValue

@@ -51,6 +51,7 @@ class Database:
         Fetches entire Table
 
     print_formatter()
+        Formats the output in terminal
 
     print_latest_rows(table : str, rows)
         Prints the latest number of rows  of table in the terminal
@@ -73,6 +74,11 @@ class Database:
     payload_add_tags(tags: dict)
         Adds a tag to the payload
 
+    getClient()
+        gets objects current client
+
+    getPayload()
+        gets objects Payload
 
     """
     def __init__(self):
@@ -192,7 +198,8 @@ class Database:
 
         :param table:
         :param number_of_rows:
-        :return:
+        :raise DatabaseTableEmptyException: IndexError
+        :return: headers, data
         """
         res = self.__client.query('SELECT * FROM "' + table + '" ORDER BY DESC LIMIT ' + str(number_of_rows) + ';')
         try:
@@ -208,7 +215,8 @@ class Database:
         gets the first number of rows from table
         :param table:
         :param number_of_rows:
-        :return:
+        :raise DatabaseTableEmptyException: IndexError
+        :return: headers, data
         """
         res = self.__client.query('SELECT * FROM "' + table + '" ORDER BY DESC LIMIT ' + str(number_of_rows) + ';')
         try:
@@ -217,14 +225,15 @@ class Database:
             headers = res["columns"]
             return headers, data
         except IndexError:
-            raise DatabaseTableEmptyExceptiony()
+            raise DatabaseTableEmptyException()
 
     def get_everything(self, table : str):
         """
         fetches entire table
 
         :param table:
-        :return:
+        :raise DatabaseTableEmptyException: IndexError
+        :return: headers, data
         """
         res = self.__client.query('SELECT * FROM "' + table + '";')
         try:
@@ -242,7 +251,7 @@ class Database:
 
         :param headers:
         :param data:
-        :return:
+        :return: columnar(data=list_of_rows, headers=headers, justify="c", min_column_width=10)
         """
         list_of_rows = []
         for d in data:
@@ -261,7 +270,7 @@ class Database:
 
         :param table:
         :param number_of_rows:
-        :return:
+        :return: self.print_formatter(headers, data)
         """
         headers, data = self.get_latest_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
@@ -272,7 +281,7 @@ class Database:
 
         :param table:
         :param number_of_rows:
-        :return:
+        :return: self.print_formatter(headers, data)
         """
         headers, data = self.get_first_rows(table=table, number_of_rows=number_of_rows)
         return self.print_formatter(headers, data)
@@ -282,7 +291,7 @@ class Database:
         prints entire table into terminal
 
         :param table:
-        :return:
+        :return: None
         """
         headers, data = self.get_everything(table)
         return self.print_formatter(headers, data)
@@ -292,7 +301,7 @@ class Database:
         Querys the database with the given command
 
         :param query:
-        :return:
+        :return: None
         """
         res = self.__client.query(query)
         try:
@@ -308,7 +317,7 @@ class Database:
         :param table:
         :param columns:
         :param tags:
-        :return:
+        :return: None
         """
         self.__columns = columns
 
@@ -329,7 +338,7 @@ class Database:
         sets payload tag
 
         :param tags:
-        :return:
+        :return: None
         """
         self.__payload["tags"] = tags
 
@@ -354,7 +363,7 @@ class Database:
         adds a payload tag
 
         :param tags:
-        :return:
+        :return: None
         """
         if "tags" in self.__payload:
             self.__payload["tags"].update(tags)
@@ -363,66 +372,10 @@ class Database:
 
     def __del__(self):
         """
+        Closes http to Client and sets client to None
 
-        :return:
+        :return: None
         """
         if self.__client is not None:
             self.__client.close()
             self.__client = None
-
-# test function
-def payload_test():
-    table = "PayloadTable"
-    db = Database()
-    db.set_database("", "", "mydb")
-    db.set_payload(table, ["Col1", "Col2"], tags={"Tag" : "TestTag4"})
-    db.update(["Nr1", "Nr2"])
-    print(db.print_first_rows(table))
-    time.sleep(5)
-    db.payload_set_tags({"Tag2" : "TestTag4"})
-    db.update(["nr1", "nr2"])
-    print(db.print_latest_rows(table))
-
-def exception_test():
-    db = Database()
-    db.create_database()
-    table = "BabyDriverTest"
-    rows = db.get_latest_rows(table, 1)
-    print(rows)
-
-
-# for testing:
-if __name__ == "__main__":
-
-
-    payload_test()
-
-
-    """col1 = 1
-    col2 = 2
-
-    data = {
-        "measurement" : "TestTable",
-        "tags": {
-            "Info": "Test"
-        },
-        "time" : datetime.datetime.now(),
-        "fields" : {
-            "Col1" : col1,
-            "Col2" : col2
-        }
-    }
-    data = [data]
-    db = Database()
-    db.setDatabase("root", "root", "DefaultDatabase")
-    #db.createDatabase()
-    #db.insert(data)
-    #db.delete("TestTable", "locked", "bla")
-    print(db.print_latest_rows("TestTable", 5))
-    #print(db.print_everything("TestTable"))
-    #print(db.custom_query("SELECT Col2 FROM TestTable WHERE Col2 = 2;"))
-    print(db.custom_query("DELETE FROM TestTable WHERE time = 1;"))
-    """
-    # PAYLOAD RELATED THINGS ARE UNTESTED
-
-
