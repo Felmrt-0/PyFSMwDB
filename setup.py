@@ -1,18 +1,21 @@
 from setuptools import find_packages, setup
 
 with open("requirements.txt") as req:
-    requirements = req.readlines()   # might need to port it to list
+    requirements = req.readlines()
+
+with open("license.txt") as l:
+    lic = l.read()
 
 setup(
-    name='FSM',
+    name='PyFSMwDB',
     packages=find_packages(include=['PyFSMwDB']),
-    version='0.2.0',
-    description='My first Python library',
-    author='Me',
-    license='ME',
-    python_requires=">=3.10", # might be strictly ">3.10"
+    version='1.0.0',
+    description='A python lib for FSM with DB',
+    author='Arian Asghari, Andreas Söderman, Felix Mårtensson, Mattias Öz',
+    license=lic,
+    python_requires=">=3.10",
     install_requires=requirements,
-    setup_requires=[],  # tror inte den här är nödvändig
-    tests_require=[],   # skulle gissa att den här bara är specifikt för tester
-    test_suite= '',
+    setup_requires=[],
+    tests_require=[],
+    test_suite='',
 )

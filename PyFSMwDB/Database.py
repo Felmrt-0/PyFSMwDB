@@ -342,15 +342,7 @@ class Database:
         """
         self.__payload["tags"] = tags
 
-    def getClient(self):
-        """
-        gets objects client
-
-        :return self.__client:
-        """
-        return self.__client
-
-    def getPayload(self):
+    def get_payload(self):
         """
         gets objects Payload
 

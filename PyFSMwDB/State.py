@@ -73,7 +73,6 @@ class State:
         self.__ending = ending
         self.__connections = {}
 
-
     def add_transition(self, condition, target: State.State):
         """
         Adds a transition to the state. If the condition is met the target will be run next.

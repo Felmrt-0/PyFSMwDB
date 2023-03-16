@@ -1,6 +1,3 @@
-import math
-from multiprocessing import Condition
-
 from PyFSMwDB.CustomExceptions import LogicException, CustomLogicException
 
 
@@ -238,23 +235,8 @@ class Logic:
             return True
         elif self.__compareValueGreater is not None and self.__compareValueLess is not None:
             return True if self.__compareValueGreater < inputV < self.__compareValueLess else False
-   
-    def set___compareValueGreater(self, greater):
-        """
-        Sets value for self.__compareValueGreater
 
-        :param greater: int, float, double
-        """
-        self.__compareValueGreater = greater
-    def set___compareValueLess(self, less):
-        """
-        Sets value for self.__compareValueLess
-
-        :param less: int, float, double
-        """
-        self.__compareValueLess = less
-
-    def get_check_string(self, input):
+    def _get_check_string(self, input):
         """
         Fetches check_string for input
 
@@ -262,35 +244,3 @@ class Logic:
         :return: self.__check_string(input)
         """
         return self.__check_string(input)
-
-    def get___compareValueGreater(self):
-        """
-        Fetches __compareValueGreater
-
-        :return: self.__compareValueGreater
-        """
-        return self.__compareValueGreater
-
-    def get__compareValueLess(self):
-        """
-        Fetches __compareValueLess
-
-        :return: self.__compareValueLess
-        """
-        return self.__compareValueLess
-
-    def get__notEqualValue(self):
-        """
-        Fetches __notEqualValue
-
-        :return: self.__notEqualValue
-        """
-        return self.__notEqualValue
-
-    def get__EqualValue(self):
-        """
-        Fetches __EqualValue
-
-        :return: self.__EqualValue
-        """
-        return self.__EqualValue

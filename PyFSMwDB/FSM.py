@@ -1,6 +1,5 @@
 from PyFSMwDB.Database import Database
 from PyFSMwDB.State import State
-from PyFSMwDB.Logic import Logic
 
 
 class FSM:
@@ -13,7 +12,7 @@ class FSM:
         A list with all the states that exists in the FSM
 
     currentState : State
-        The current state the FSM is running or is using
+        The current staget_stateste the FSM is running or is using
 
     done : bool
         A bool that determent if the FSM is done running
@@ -191,7 +190,7 @@ class FSM:
         """
         return self.__database
 
-    def get_states(self):
+    def _get_states(self):
         """
         Fetches the State List
 
@@ -199,19 +198,10 @@ class FSM:
         """
         return self.__states
 
-    def get_current(self):
+    def _get_current(self):
         """
         Returns the current State
 
         :return: current State
         """
         return self.__currentState
-
-    def is_Done(self):
-        """
-        Check if Done
-
-        :return: self.__done
-        """
-        return self.__done
-

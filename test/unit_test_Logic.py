@@ -43,8 +43,8 @@ def in_range_limits_unit_test(lower, higher):      #in_range_limits_unit_test fr
 
 def check_string_unit_test(inputstringright, inputstringwrong):
     log = Logic()
-    Returnvalue_right = log.get_check_string(inputstringright)
-    Returnvalue_wrong = log.get_check_string(inputstringwrong)
+    Returnvalue_right = log._get_check_string(inputstringright)
+    Returnvalue_wrong = log._get_check_string(inputstringwrong)
     if Returnvalue_right == True:
         print ("works fine with right input")
     if Returnvalue_wrong == False:

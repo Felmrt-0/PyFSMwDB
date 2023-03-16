@@ -143,7 +143,7 @@ def database_test1():
             "test tag" : "this is a test tag"
         }
         database.payload_set_tags(newtag)
-        if database.getPayload()["tags"] == newtag:
+        if database.get_payload()["tags"] == newtag:
             payload_set_tags_test = True
         else:
             print("payload_set_tags_test Failed")
@@ -159,7 +159,7 @@ def database_test1():
             "super tag": "super"
         }
         database.payload_add_tags(newtag1)
-        if database.getPayload()["tags"] == newtag1:
+        if database.get_payload()["tags"] == newtag1:
             payload_add_tags_test = True
         else:
             print("payload_set_tags_test Failed")

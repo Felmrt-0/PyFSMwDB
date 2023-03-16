@@ -38,7 +38,7 @@ def add_states_test():
         state1 = State(testFunc)
         state2 = State(testFunc)
         fsmStates.add_states([state1, state2])
-        if fsmStates.get_states()[0] == state1 and fsmStates.get_states()[1] == state2:
+        if fsmStates._get_states()[0] == state1 and fsmStates._get_states()[1] == state2:
             return True
         print("add_states_test Failed")
         return False
@@ -52,7 +52,7 @@ def set_current_state_test():
         fsm2 = FSM()
         stateA = State(testFunc)
         fsm2.set_current_state(stateA)
-        if fsm2.get_current() == stateA:
+        if fsm2._get_current() == stateA:
             return True
         print("set_current_state_test Failed")
         return False

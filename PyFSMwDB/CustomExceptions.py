@@ -35,9 +35,3 @@ class DatabaseTableEmptyException(Exception):
     def __init__(self, message="The query returned nothing"):
         self.message = message
         super().__init__(self.message)
-
-
-if __name__ == "__main__":
-    #raise TransitionNotFoundException(condition=2, connections={"ne": 2})
-    raise LogicException("The lower limit for \"in_range\" is larger or equal to the upper limit")
-    #raise CustomLogicException("hej")
