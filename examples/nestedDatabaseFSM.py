@@ -26,7 +26,7 @@ def fSub1(db, table):
         if c == "Main FSM":
             index = i
             break
-    print("The string you entered was ", str(data[0][index]))
+    print("The string you entered was", str(data[0][index]))
     return True, table
 
 def fSub2(db, table):
@@ -38,7 +38,7 @@ def fSub2(db, table):
         },
         "time": datetime.datetime.now(),
         "fields": {
-            "Main FSM": inp
+            "Sub FSM": inp
         }
     }
     db.insert([data])
@@ -65,7 +65,7 @@ def fMain3(db, table):
         if c == "Sub FSM":
             index = i
             break
-    print("The string you entered was ", str(data[0][index]))
+    print("The string you entered was", str(data[0][index]))
     return True, table
 
 if __name__ == "__main__":

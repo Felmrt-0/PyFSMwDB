@@ -31,7 +31,7 @@ def dbRead(db, table: str):
             index = i
             break
     try:
-        print("The square root of your input is: ", str(math.sqrt(data[0][index])))
+        print("The square root of your input is: ", str(math.sqrt(float(data[0][index]))))
     except ValueError:
         print("The string entered was", str(data[0][index]))
 

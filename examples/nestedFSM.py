@@ -15,12 +15,12 @@ def func1():
     return True, inp
 
 def subFunc1(arg):
-    print("Your input+1 squared is:", arg*arg)
+    print("  Your input+1 squared is:", arg*arg)
     return True, arg
 
 def subFunc2(arg):
     sqr = math.sqrt(arg)
-    print("The square root of your input+1 is:", sqr)
+    print("  The square root of your input+1 is:", sqr)
     return True, sqr
 
 def func2(arg):
