@@ -13,18 +13,20 @@ def unlocked():
         return
     return inp
 
-fsm = FSM() # declare the FSM
 
-lockedState = State(locked) # the create the two states seen in the image
-unlockedState = State(unlocked) # pass in functions for the states
+if __name__ == "__main__":
+    fsm = FSM() # declare the FSM
 
-lockedState.add_transition("coin", unlockedState) # add the four transitions seen in the image
-lockedState.add_transition("push", lockedState)
-unlockedState.add_transition("push", lockedState)
-unlockedState.add_transition("coin", unlockedState)
+    lockedState = State(locked) # the create the two states seen in the image
+    unlockedState = State(unlocked) # pass in functions for the states
 
-fsm.add_states([lockedState, unlockedState]) # add the states to the FSM
+    lockedState.add_transition("coin", unlockedState) # add the four transitions seen in the image
+    lockedState.add_transition("push", lockedState)
+    unlockedState.add_transition("push", lockedState)
+    unlockedState.add_transition("coin", unlockedState)
 
-fsm.set_current_state(lockedState) # set the state that the FSM is going to start in´
+    fsm.add_states([lockedState, unlockedState]) # add the states to the FSM
 
-fsm.run()
+    fsm.set_current_state(lockedState) # set the state that the FSM is going to start in´
+
+    fsm.run()

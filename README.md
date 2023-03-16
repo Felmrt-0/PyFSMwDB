@@ -260,7 +260,7 @@ state2.add_transition(True, state3)
 
 fsm.add_states([state1, state2, state3])
 
-fsm.run(inp)
+fsm.run()
 ```
 
 The argument can be implemented as seen below. They will take a input from the user and increment it by one in each state.
@@ -412,7 +412,7 @@ def func2(arg):
 
     subState1.add_transition(True, subState2)
 
-    sqr = fsm.run()[1]  # get the value from subFunc2
+    sqr = subfsm.run()[1]  # get the value from subFunc2
 
     return True, sqr
 
@@ -473,7 +473,7 @@ def fSub1(db, table):
     for i, c in enumerate(col):
         if c == "Main FSM":
             index = i
-            break;
+            break
     print("The string you entered was ", str(data[0][index]))
     return True, table
 
@@ -502,7 +502,7 @@ def fMain2(db, table):
 
     subState1.add_transition(True, subState2)
 
-    tableReturn = fsm.run(table)[1]  # get the value from subFunc2
+    tableReturn = subfsm.run(table)[1]  # get the value from subFunc2
 
     return True, tableReturn
 
