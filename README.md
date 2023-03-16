@@ -212,7 +212,7 @@ When using the FSM it is possible to pass data between the states, meaning that 
 
 Below an example of a FSM diagram passing arguments between states can be seen. In this example the first value above the arrows is the swapping condition and the second us the arguments being send between the states.
 
-![FSM diagram of data being sent between states][https://drive.google.com/uc?export=view&id=1sr4u0515s5Hdn47IqjjRANxlBkWBjpuu]
+![FSM diagram of data being sent between states](https://drive.google.com/uc?export=view&id=1sr4u0515s5Hdn47IqjjRANxlBkWBjpuu)
 
 As can be seen in the diagram above the swapping conditions for all states will be True since that is not an important part of the test, what is important is the information being sent between the states. An example of how the code can be written is seen below.
 
