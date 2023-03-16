@@ -14,14 +14,46 @@ InfluxDB is needed in order to run with the default database. In addition to the
 sudo apt install influxdb
 ```
 
-## Windows
-I don't know
-
-## Mac
-I don't care
-
 # Installation
-Install the .whl file through pip
+The installation can be carried out in three slightly different ways: 
+via pip's online repo; 
+via the .whl file; 
+and via the repository. 
+
+### Via pip's online repository:
+1. Run the command:
+```bash
+pip install PyFSMwDB
+```
+
+### Via .whl file:
+1. Download the latest .whl file from the Releases tab of the Github.
+2. Install it through pip using the command:
+```bash
+pip install <path-to-.whl-file>
+```
+
+### Via the repository:
+
+1. Clone the repository with the command:
+```bash
+git clone https://github.com/Felmrt-0/PyFSMwDB.git
+```
+
+2. Go into the directory with:
+```bash
+cd PyFSMwDB/
+```
+
+4. Install directly from the repository with:
+```bash
+pip install .
+```
+
+Alternatively, the project can be installed editably by instead running with the "-e" option:
+```bash
+pip install -e .
+```
 
 # How to Use the Framework
 After the framework has been installed the first step towards learning to use the framework is to 
