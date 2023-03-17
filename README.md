@@ -16,7 +16,7 @@ sudo apt install influxdb
 
 # Installation
 The installation can be carried out in three slightly different ways: 
-via pip's online repo; 
+via PyPi's online repo; 
 via the .whl file; 
 and via the repository. 
 
@@ -27,7 +27,7 @@ pip install PyFSMwDB
 ```
 
 ### Via .whl file:
-1. Download the latest .whl file from the Releases tab of the Github.
+1. Download the latest .whl file from the "Releases" section of the GitHub.
 2. Install it through pip using the command:
 ```bash
 pip install <path-to-.whl-file>
